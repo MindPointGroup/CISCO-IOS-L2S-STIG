@@ -1,0 +1,60 @@
+---
+- name: "LOW | CISC-L2-000090 | PATCH | The Cisco switch must have Root Guard enabled on all switch ports connecting to access layer switches."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000090
+  tags:
+      - CISC-L2-000090
+      - CAT3
+      - CCI-002385
+      - SRG-NET-000362-L2S-000021
+      - SV-220629r744223_rule
+      - V-220629
+
+- name: "LOW | CISC-L2-000160 | PATCH | The Cisco switch must have Storm Control configured on all host-facing switchports."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000160
+  tags:
+      - CISC-L2-000160
+      - CAT3
+      - CCI-000366
+      - SRG-NET-000512-L2S-000001
+      - SV-220636r648763_rule
+      - V-220636
+
+- name: "LOW | CISC-L2-000170 | PATCH | The Cisco switch must have IGMP or MLD Snooping configured on all VLANs."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000170
+  tags:
+      - CISC-L2-000170
+      - CAT3
+      - CCI-000366
+      - SRG-NET-000512-L2S-000002
+      - SV-220637r539671_rule
+      - V-220637
+
+- name: "LOW | CISC-L2-000270 | PATCH | The Cisco switch must not have any switchports assigned to the native VLAN."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000270
+  tags:
+      - CISC-L2-000270
+      - CAT3
+      - CCI-000366
+      - SRG-NET-000512-L2S-000013
+      - SV-220647r539671_rule
+      - V-220647
+
+
+
+
+
+
+
+

@@ -22,5 +22,38 @@ change_requires_reboot: false
 # These variables correspond with the STIG IDs defined in the STIG and allows you to enable/disable specific rules.
 # PLEASE NOTE: These work in coordination with the cat1, cat2, cat3 group variables. You must enable an entire group
 # in order for the variables below to take effect.
+
 # CAT 1 rules
-rhel_08_010000: true
+cisc_l2_000020: true
+
+# CAT 2 rules
+cisc_l2_000010: true
+cisc_l2_000030: true
+cisc_l2_000040: true
+cisc_l2_000060: true
+cisc_l2_000070: true
+cisc_l2_000080: true
+cisc_l2_000100: true
+cisc_l2_000110: true
+cisc_l2_000120: true
+cisc_l2_000130: true
+cisc_l2_000150: true
+cisc_l2_000180: true
+cisc_l2_000190: true
+cisc_l2_000200: true
+cisc_l2_000210: true
+cisc_l2_000220: true
+cisc_l2_000230: true
+cisc_l2_000240: true
+cisc_l2_000250: true
+cisc_l2_000260: true
+
+# CAT 3 rules
+cisc_l2_000090: true
+cisc_l2_000160: true
+cisc_l2_000170: true
+cisc_l2_000270: true
+
+
+
+

@@ -11,3 +11,281 @@
       - SRG-NET-000131-L2S-000014
       - SV-220622r539671_rule
       - V-220622
+      
+- name: "MEDIUM | CISC-L2-000030 | PATCH | The Cisco switch must authenticate all VLAN Trunk Protocol (VTP) messages with a hash function using the most secured cryptographic algorithm available."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000030
+  tags:
+      - CISC-L2-000030
+      - CAT2
+      - CCI-000803
+      - SRG-NET-000168-L2S-000019
+      - SV-220624r539671_rule
+      - V-220624
+
+- name: "MEDIUM | CISC-L2-000040 | PATCH | The Cisco switch must manage excess bandwidth to limit the effects of packet-flooding types of denial-of-service (DoS) attacks."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000040
+  tags:
+      - CISC-L2-000040
+      - CAT2
+      - CCCI-001095
+      - SRG-NET-000193-L2S-000020
+      - SV-220625r539671_rule
+      - V-220625
+
+- name: "MEDIUM | CISC-L2-000060 | PATCH | The Cisco switch must manage excess bandwidth to limit the effects of packet-flooding types of denial-of-service (DoS) attacks."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000060
+  tags:
+      - CISC-L2-000060
+      - CAT2
+      - CCI-001919
+      - SRG-NET-000331-L2S-000001
+      - SV-220626r539671_rule
+      - V-220626
+
+- name: "MEDIUM | CISC-L2-000070 | PATCH | The Cisco switch must be configured for authorized users to remotely view, in real time, all content related to an established user session from a component separate from the Cisco switch."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000070
+  tags:
+      - CISC-L2-000070
+      - CAT2
+      - CCI-001920
+      - SRG-NET-000332-L2S-000002
+      - SV-220627r539671_rule
+      - V-220627
+
+- name: "MEDIUM | CISC-L2-000080 | PATCH | The Cisco switch must authenticate all endpoint devices before establishing any connection."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000080
+  tags:
+      - CISC-L2-000080
+      - CAT2
+      - CCI-001958
+      - SRG-NET-000343-L2S-000016
+      - SV-220628r539671_rule
+      - V-220628
+
+- name: "MEDIUM | CISC-L2-000100 | PATCH |  The Cisco switch must have Bridge Protocol Data Unit (BPDU) Guard enabled on all user-facing or untrusted access switch ports."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000100
+  tags:
+      - CISC-L2-000100
+      - CAT2
+      - CCI-002385
+      - SRG-NET-000362-L2S-000022
+      - SV-220630r539671_rule
+      - V-220630
+
+- name: "MEDIUM | CISC-L2-000110 | PATCH | The Cisco switch must have Spanning Tree Protocol (STP) Loop Guard enabled."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000110
+  tags:
+      - CISC-L2-000110
+      - CAT2
+      - CCI-002385
+      - SRG-NET-000362-L2S-000023
+      - SV-220631r539671_rule
+      - V-220631
+
+- name: "MEDIUM | CISC-L2-000120 | PATCH | The Cisco switch must have Unknown Unicast Flood Blocking (UUFB) enabled."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000120
+  tags:
+      - CISC-L2-000120
+      - CAT2
+      - CCI-002385
+      - SRG-NET-000362-L2S-000024
+      - SV-220632r539671_rule
+      - V-220632
+
+- name: "MEDIUM | CISC-L2-000130 | PATCH | The Cisco switch must have Spanning Tree Protocol (STP) Loop Guard enabled."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000130
+  tags:
+      - CISC-L2-000130
+      - CAT2
+      - CCI-002385
+      - SRG-NET-000362-L2S-000025
+      - V-220633r539671_rule
+      - V-220633
+
+- name: "MEDIUM | CISC-L2-000130 | PATCH | The Cisco switch must have DHCP snooping for all user VLANs to validate DHCP messages from untrusted sources."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000130
+  tags:
+      - CISC-L2-000130
+      - CAT2
+      - CCI-002385
+      - SRG-NET-000362-L2S-000025
+      - V-220633r539671_rule
+      - V-220633
+
+- name: "MEDIUM | CISC-L2-000140 | PATCH | The Cisco switch must have IP Source Guard enabled on all user-facing or untrusted access switch ports."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000140
+  tags:
+      - CISC-L2-000140
+      - CAT2
+      - CCI-002385
+      - SRG-NET-000362-L2S-000026
+      - SV-220634r744220_rule
+      - V-220634
+
+- name: "MEDIUM | CISC-L2-000150 | PATCH | The Cisco switch must have Dynamic Address Resolution Protocol (ARP) Inspection (DAI) enabled on all user VLANs."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000150
+  tags:
+      - CISC-L2-000150
+      - CAT2
+      - CCI-002385
+      - SRG-NET-000362-L2S-000027
+      - SV-220635r539671_rule
+      - V-220635
+
+- name: "MEDIUM | CISC-L2-000180 | PATCH | The Cisco switch must implement Rapid Spanning Tree Protocol (STP) where VLANs span multiple switches with redundant links."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000180
+  tags:
+      - CISC-L2-000180
+      - CAT2
+      - CCI-000366
+      - SRG-NET-000512-L2S-000003
+      - SV-220638r539671_rule
+      - V-220638
+
+- name: "MEDIUM | CISC-L2-000190 | PATCH | The Cisco switch must enable Unidirectional Link Detection (UDLD) to protect against one-way connections."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000190
+  tags:
+      - CISC-L2-000190
+      - CAT2
+      - CCI-000366
+      - SRG-NET-000512-L2S-000004
+      - SV-220639r539671_rule
+      - V-220639
+
+- name: "MEDIUM | CISC-L2-000200 | PATCH | The Cisco switch must have all trunk links enabled statically."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000200
+  tags:
+      - CISC-L2-000200
+      - CAT2
+      - CCI-000366
+      - SRG-NET-000512-L2S-000005
+      - SV-220640r539671_rule
+      - V-220640
+
+- name: "MEDIUM | CISC-L2-000210 | PATCH | The Cisco switch must have all disabled switch ports assigned to an unused VLAN."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000210
+  tags:
+      - CISC-L2-000210
+      - CAT2
+      - CCI-000366
+      - SRG-NET-000512-L2S-000007
+      - SV-220641r539671_rule
+      - V-220641
+
+- name: "MEDIUM | CISC-L2-000220 | PATCH | The Cisco switch must not have the default VLAN assigned to any host-facing switch ports."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000220
+  tags:
+      - CISC-L2-000220
+      - CAT2
+      - CCI-000366
+      - SRG-NET-000512-L2S-000008
+      - SV-220642r539671_rule
+      - V-220642
+
+- name: "MEDIUM | CISC-L2-000230 | PATCH | The Cisco switch must have the default VLAN pruned from all trunk ports that do not require it."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000230
+  tags:
+      - CISC-L2-000230
+      - CAT2
+      - CCI-000366
+      - SRG-NET-000512-L2S-000009
+      - SV-220643r539671_rule
+      - V-220643
+
+- name: "MEDIUM | CISC-L2-000240 | PATCH | The Cisco switch must not use the default VLAN for management traffic."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000240
+  tags:
+      - CISC-L2-000240
+      - CAT2
+      - CCI-000366
+      - SRG-NET-000512-L2S-000010
+      - SV-220644r539671_rule
+      - V-220644
+
+- name: "MEDIUM | CISC-L2-000250 | PATCH | The Cisco switch must have all user-facing or untrusted ports configured as access switch ports."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000250
+  tags:
+      - CISC-L2-000250
+      - CAT2
+      - CCI-000366
+      - SRG-NET-000512-L2S-000011
+      - SV-220645r539671_rule
+      - V-220645
+
+- name: "MEDIUM | CISC-L2-000260 | PATCH | The Cisco switch must have the native VLAN assigned to an ID other than the default VLAN for all 802.1q trunk links."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000260
+  tags:
+      - CISC-L2-000260
+      - CAT2
+      - CCI-000366
+      - SRG-NET-000512-L2S-000012
+      - SV-220646r539671_rule
+      - V-220646
+
+
+
+
+
