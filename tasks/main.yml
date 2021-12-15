@@ -1,4 +1,7 @@
 ---
+- name: GATHER SWITCH FACTS
+  ios_facts:
+
 - name: Include CAT 1 patches
   import_tasks: fix-cat1.yml
   when: iosl2sstig_cat1_patch

@@ -116,19 +116,6 @@
       - SV-220632r539671_rule
       - V-220632
 
-- name: "MEDIUM | CISC-L2-000130 | PATCH | The Cisco switch must have Spanning Tree Protocol (STP) Loop Guard enabled."
-  ios_command:
-      commands: echo true
-  when:
-      - cisc_l2_000130
-  tags:
-      - CISC-L2-000130
-      - CAT2
-      - CCI-002385
-      - SRG-NET-000362-L2S-000025
-      - V-220633r539671_rule
-      - V-220633
-
 - name: "MEDIUM | CISC-L2-000130 | PATCH | The Cisco switch must have DHCP snooping for all user VLANs to validate DHCP messages from untrusted sources."
   ios_command:
       commands: echo true
