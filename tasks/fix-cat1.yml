@@ -1,0 +1,13 @@
+---
+- name: "HIGH | CISC-L2-000020 | PATCH | The Cisco switch must uniquely identify all network-connected endpoint devices before establishing any connection."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000020
+  tags:
+      - CISC-L2-000020
+      - CAT1
+      - CCI-000778
+      - SRG-NET-000148-L2S-000015
+      - SV-220623r539671_rule
+      - V-220623

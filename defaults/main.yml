@@ -1,2 +1,26 @@
 ---
-# defaults file for .
+iosl2sstig_cat1_patch: true
+iosl2sstig_cat2_patch: true
+iosl2sstig_cat3_patch: true
+
+# We've defined complexity-high to mean that we cannot automatically remediate
+# the rule in question.  In the future this might mean that the remediation
+# may fail in some cases.
+iosl2sstig_complexity_high: false
+
+# We've defined disruption-high to indicate items that are likely to cause
+# disruption in a normal workflow.  These items can be remediated automatically
+# but are disabled by default to avoid disruption.
+iosl2sstig_disruption_high: true
+
+# Whether to skip the reboot
+iosl2sstig_skip_reboot: true
+
+# Defined will change if control requires
+change_requires_reboot: false
+
+# These variables correspond with the STIG IDs defined in the STIG and allows you to enable/disable specific rules.
+# PLEASE NOTE: These work in coordination with the cat1, cat2, cat3 group variables. You must enable an entire group
+# in order for the variables below to take effect.
+# CAT 1 rules
+rhel_08_010000: true

@@ -1,2 +1,14 @@
 ---
-# tasks file for .
+- name: Include CAT I patches
+  import_tasks: fix-cat1.yml
+  when: iosl2sstig_cat1_patch
+  tags:
+      - CAT1
+      - high
+
+- name: Include CAT II patches
+  import_tasks: fix-cat2.yml
+  when: iosl2sstig_cat2_patch
+  tags:
+      - CAT2
+      - medium

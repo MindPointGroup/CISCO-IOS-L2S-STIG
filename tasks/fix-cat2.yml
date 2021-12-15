@@ -1,0 +1,13 @@
+---
+- name: "MEDIUM | CISC-L2-000010 | PATCH | The Cisco switch must be configured to disable non-essential capabilities."
+  ios_command:
+      commands: echo true
+  when:
+      - cisc_l2_000010
+  tags:
+      - CISC-L2-000010
+      - CAT2
+      - CCI-000381
+      - SRG-NET-000131-L2S-000014
+      - SV-220622r539671_rule
+      - V-220622
