@@ -67,7 +67,6 @@
         cisco.ios.ios_config:
             lines: 
               - monitor session {{ item }}
-            
         with_items:
             - "{{ iosstig_monitor_session_source }}"
 
