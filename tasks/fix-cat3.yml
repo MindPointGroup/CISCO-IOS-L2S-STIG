@@ -63,26 +63,18 @@
 
 - name: "LOW | CISC-L2-000270 | PATCH | The Cisco switch must not have any switchports assigned to the native VLAN."
   block:
-      - name: Get Native Vlan
+      - name: "LOW | CISC-L2-000270 | PATCH | The Cisco switch must not have any switchports assigned to the native VLAN. | Get Native Vlan"
         cisco.ios.ios_command:
           commands:
             - show interfaces trunk
-        register: trunk 
-      - name: accessing the first element of an item
+        register: cisc_l2_000270_trunkinfo
+        
+      - name: "LOW | CISC-L2-000270 | PATCH | The Cisco switch must not have any switchports assigned to the native VLAN. | Message Out"
         debug:
-          msg: "{{ array.0 }}"
-        vars:
-          array: "{{ item }}"
-        loop: "{{ trunk.stdout_lines }}"
-
-
-      # - name: Set Fact Line Native Vlan
-      #   set_fact:
-      #     nativevlan: "{{ trunk.stdout_lines.array.0 | regex_search ('Native vlan') }}"
-      # - name: Print Fact
-      #   debug:
-      #     msg: "{{ nativevlan }}"    
-
+          msg:
+              - "Warning! Below are the ports that are on the native VLAN"
+              - "To conform to STIG standards make sure these are not access switch ports"
+              - "{{ cisc_l2_000270_trunkinfo.stdout_lines }}"
   when:
       - cisc_l2_000270
   tags:

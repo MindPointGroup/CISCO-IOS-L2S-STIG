@@ -28,7 +28,7 @@ cisc_l2_000020: true
 
 # CAT 2 rules
 cisc_l2_000010: false
-#cisc_l2_000030: false
+cisc_l2_000030: false
 cisc_l2_000040: false
 cisc_l2_000060: false
 cisc_l2_000070: false
@@ -50,10 +50,10 @@ cisc_l2_000250: false
 cisc_l2_000260: false
 
 # CAT 3 rules
-cisc_l2_000090: false
-cisc_l2_000160: false
+cisc_l2_000090: true
+cisc_l2_000160: true
 cisc_l2_000170: true
-cisc_l2_000270: false
+cisc_l2_000270: true
 
 
 
