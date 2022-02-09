@@ -26,8 +26,36 @@
       - V-220636
 
 - name: "LOW | CISC-L2-000170 | PATCH | The Cisco switch must have IGMP or MLD Snooping configured on all VLANs."
-  ios_command:
-      commands: echo true
+  block:
+      - name: Verify No IP IGMP Snooping is in the config file
+        cisco.ios.ios_command:
+          commands:
+            - show run | include no ip igmp    
+        register: igmp
+      - name: Set Fact For IGMP
+        set_fact:
+            igmp_mode: "{{ igmp.stdout | regex_search ('no ip igmp snooping') }}"   
+      - name: Print Fact
+        debug:
+          msg: Your Switch Currently Has IGMP Snooping Configured As "{{ igmp_mode }}" 
+      - name: Enable IGMP On Switch
+        cisco.ios.ios_config:
+            commands: 
+                - ip igmp snooping
+        when: 
+            - igmp_mode|length > 0
+
+
+      - name: If Global IGMP Is Set Enabled Verify no IGMP is not turned off on vlan's
+        cisco.ios.ios_command:
+          commands:
+            - show run | include no ip igmp snooping vlan
+        register: igmpvlan
+      - name: Show IGMP VLAN output 
+        debug:
+          msg: YOU ARE NOT IN COMPLIANCE YOUR GLOABLLY IGMP IS ENABLED BUT YOU STILL HAVE VLANS SHUT OFF
+        when:
+            - igmp_mode|length == 0 and igmpvlan|length > 0
   when:
       - cisc_l2_000170
   tags:
@@ -39,13 +67,32 @@
       - V-220637
 
 - name: "LOW | CISC-L2-000270 | PATCH | The Cisco switch must not have any switchports assigned to the native VLAN."
-  ios_command:
-      commands: echo true
+  block:
+      - name: Get Native Vlan
+        cisco.ios.ios_command:
+          commands:
+            - show interfaces trunk
+        register: trunk 
+      - name: accessing the first element of an item
+        debug:
+          msg: "{{ array.0 }}"
+        vars:
+          array: "{{ item }}"
+        loop: "{{ trunk.stdout_lines }}"
+
+
+      # - name: Set Fact Line Native Vlan
+      #   set_fact:
+      #     nativevlan: "{{ trunk.stdout_lines.array.0 | regex_search ('Native vlan') }}"
+      # - name: Print Fact
+      #   debug:
+      #     msg: "{{ nativevlan }}"    
+
   when:
       - cisc_l2_000270
   tags:
       - CISC-L2-000270
-      - CAT3
+      - CAT3s
       - CCI-000366
       - SRG-NET-000512-L2S-000013
       - SV-220647r539671_rule

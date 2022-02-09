@@ -1,7 +1,7 @@
 ---
-iosl2sstig_cat1_patch: true
+iosl2sstig_cat1_patch: false
 iosl2sstig_cat2_patch: true
-iosl2sstig_cat3_patch: true
+iosl2sstig_cat3_patch: false
 
 # We've defined complexity-high to mean that we cannot automatically remediate
 # the rule in question.  In the future this might mean that the remediation
@@ -27,31 +27,87 @@ change_requires_reboot: false
 cisc_l2_000020: true
 
 # CAT 2 rules
-cisc_l2_000010: true
-cisc_l2_000030: true
-cisc_l2_000040: true
-cisc_l2_000060: true
-cisc_l2_000070: true
-cisc_l2_000080: true
-cisc_l2_000100: true
-cisc_l2_000110: true
-cisc_l2_000120: true
-cisc_l2_000130: true
-cisc_l2_000140: true
-cisc_l2_000150: true
-cisc_l2_000180: true
-cisc_l2_000190: true
+cisc_l2_000010: false
+cisc_l2_000030: false
+cisc_l2_000040: false
+cisc_l2_000060: false
+cisc_l2_000070: false
+cisc_l2_000080: false
+cisc_l2_000100: false
+cisc_l2_000110: false
+cisc_l2_000120: false
+cisc_l2_000130: false
+cisc_l2_000140: false
+cisc_l2_000150: false
+cisc_l2_000180: false
+cisc_l2_000190: false
 cisc_l2_000200: true
-cisc_l2_000210: true
-cisc_l2_000220: true
-cisc_l2_000230: true
-cisc_l2_000240: true
-cisc_l2_000250: true
-cisc_l2_000260: true
+cisc_l2_000210: false
+cisc_l2_000220: false
+cisc_l2_000230: false
+cisc_l2_000240: false
+cisc_l2_000250: false
+cisc_l2_000260: false
 
 # CAT 3 rules
-cisc_l2_000090: true
-cisc_l2_000160: true
-cisc_l2_000170: true
-cisc_l2_000270: true
+cisc_l2_000090: false
+cisc_l2_000160: false
+cisc_l2_000170: false
+cisc_l2_000270: false
+
+
+
+
+
+
+# Cat 2 
+
+# CISC-L2-000010
+# Not all Cisco switches support these features please make sure you add 
+# Review the switch configuration to verify that the switch does not have any unnecessary 
+# or non-secure services enabled. 
+# Note: ip http server can be enabled provided that the "ip http active-session-modules none" 
+# command is configured for scenarios such as ISE sending URL redirects to the switch.
+# For example, the following commands should not be in the configuration: 
+# - boot network
+# - ip boot server
+# - ip bootp server
+# - ip dns server
+# - ip identd
+# - ip finger
+# - ip http server
+# - ip rcmd rcp-enable
+# - ip rcmd rsh-enable
+# - service config
+# - service finger
+# - service tcp-small-servers
+# - service udp-small-servers
+# - service pad
+iosstig_non_essential_serv:
+    - ip finger
+    - ip http server
+    - ip rcmd rcp-enable
+    - ip rcmd rsh-enable
+    - service config
+    - service finger
+    - service tcp-small-servers
+    - service udp-small-servers
+    - service pad
+
+
+    
+# CISC-L2-000030
+iosstig_vtp_mode:
+    - Server
+    - Transparent
+    - Client
+    - 'Off'
+
+
+# CISC-L2-000110
+# The STP loop guard feature provides additional protection against STP loops. 
+# An STP loop is created when an STP blocking port in a redundant topology erroneously 
+# transitions to the forwarding state. In its operation, STP relies on continuous 
+# reception and transmission of BPDUs based on the port role. 
+# iosstig_stp_loop_guard:
 

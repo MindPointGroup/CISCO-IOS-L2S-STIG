@@ -1,7 +1,9 @@
 ---
 - name: "MEDIUM | CISC-L2-000010 | PATCH | The Cisco switch must be configured to disable non-essential capabilities."
-  ios_command:
-      commands: echo true
+  cisco.ios.ios_config:
+      lines: no {{ item }}
+  with_items:
+      - "{{ iosstig_non_essential_serv }}"
   when:
       - cisc_l2_000010
   tags:
@@ -13,23 +15,49 @@
       - V-220622
       
 - name: "MEDIUM | CISC-L2-000030 | PATCH | The Cisco switch must authenticate all VLAN Trunk Protocol (VTP) messages with a hash function using the most secured cryptographic algorithm available."
-  ios_command:
-      commands: echo true
+  block:
+      - name: Get VTP Mode and Register
+        cisco.ios.ios_command:
+            commands: 
+              - Show vtp status | include VTP Operating Mode
+        register: vtp_mode
+      - name: Print vtp_mode
+        debug: 
+            msg: "{{ vtp_mode.stdout }}"
+      - name: Set Fact For Version
+        set_fact:
+            vtp_mode: "{{ vtp_mode.stdout | regex_search ('Off|Client|Server|Transparent') }}"
+      - name: Print Fact
+        debug:
+            msg: "{{ vtp_mode }}"
   when:
       - cisc_l2_000030
   tags:
       - CISC-L2-000030
-      - CAT2
+      - CAT2s
       - CCI-000803
       - SRG-NET-000168-L2S-000019
       - SV-220624r539671_rule
       - V-220624
 
 - name: "MEDIUM | CISC-L2-000040 | PATCH | The Cisco switch must manage excess bandwidth to limit the effects of packet-flooding types of denial-of-service (DoS) attacks."
-  ios_command:
-      commands: echo true
+  block:
+    - name: Run mls qos in global config
+      cisco.ios.ios_config:
+          commands: 
+              - mls qos
+      register: mls
+    - name: print str data if nothing there
+      debug: 
+        msg: "{{ mls }}"
+    - name: Produce error message when MLS QOS is not a option on Device.  
+      debug:
+        msg: Your Cisco Device Does Not Support MLS QOS **** THIS IS A FINDING ****
+      when:
+          - mls.rc == 1
   when:
       - cisc_l2_000040
+      # - ansible.facts.version >= 12.1
   tags:
       - CISC-L2-000040
       - CAT2
@@ -38,9 +66,10 @@
       - SV-220625r539671_rule
       - V-220625
 
-- name: "MEDIUM | CISC-L2-000060 | PATCH | The Cisco switch must manage excess bandwidth to limit the effects of packet-flooding types of denial-of-service (DoS) attacks."
-  ios_command:
-      commands: echo true
+- name: "MEDIUM | CISC-L2-000060 | PATCH | The Cisco switch must be configured for authorized users to select a user session to capture."
+  cisco.ios.ios_command:
+      commands: 
+        - Show vtp status | include VTP Operating Mode
   when:
       - cisc_l2_000060
   tags:
@@ -78,8 +107,9 @@
       - V-220628
 
 - name: "MEDIUM | CISC-L2-000100 | PATCH |  The Cisco switch must have Bridge Protocol Data Unit (BPDU) Guard enabled on all user-facing or untrusted access switch ports."
-  ios_command:
-      commands: echo true
+  cisco.ios.ios_config:
+      commands: 
+        - spanning-tree portfast bpduguard default
   when:
       - cisc_l2_000100
   tags:
@@ -91,8 +121,10 @@
       - V-220630
 
 - name: "MEDIUM | CISC-L2-000110 | PATCH | The Cisco switch must have Spanning Tree Protocol (STP) Loop Guard enabled."
-  ios_command:
-      commands: echo true
+  cisco.ios.ios_config:
+      lines: 
+          - spanning-tree loopguard default
+          - spanning-tree mode pvst
   when:
       - cisc_l2_000110
   tags:
@@ -102,7 +134,7 @@
       - SRG-NET-000362-L2S-000023
       - SV-220631r539671_rule
       - V-220631
-
+  
 - name: "MEDIUM | CISC-L2-000120 | PATCH | The Cisco switch must have Unknown Unicast Flood Blocking (UUFB) enabled."
   ios_command:
       commands: echo true
@@ -182,8 +214,63 @@
       - V-220639
 
 - name: "MEDIUM | CISC-L2-000200 | PATCH | The Cisco switch must have all trunk links enabled statically."
-  ios_command:
-      commands: echo true
+  block:
+      - name: Gather Interface Port Names
+        cisco.ios.ios_command:
+            commands: show interfaces switchport | include Name
+        register: portname
+      - name: Check Port Negotitaion Status
+        cisco.ios.ios_command:
+            commands: show interfaces switchport | include Negotiation
+        register: portnegotiation
+      - name: "Port Name"
+        set_fact:
+          test_port: "{{ portname.stdout | regex_findall('Name:.*') | regex_replace('Name: ', '') }}"
+      - name: Print Test Fact
+        debug:
+          msg: "{{ test_port }}"
+      - name: Port Name On/Off
+        set_fact:
+          test_status: "{{ portnegotiation.stdout | regex_findall('Negotiation of Trunking:.*') | regex_replace('Negotiation of Trunking: ', '') }}"
+      - name: Print Test Fact
+        debug:
+          msg: "{{ test_status }}"
+      - name: Error Check
+        debug:
+          msg: "{{ portname }} not compliant"
+        with_items: 
+            - "{{ portnegotiation }}"
+        when: test_status == Off
+
+
+
+
+
+
+
+
+      # - name: Test On Port Name
+      #   debug:
+      #     msg: "{{ portname.stdout_lines[0][0] }}"
+      #   with_items: "{{ portnegotiation.stdout_lines[0][0]}}"
+      # - name: Combine Lists
+      #   set_fact:
+      #     final_list: "{{ portname ~ ',' ~ portnegotiation }}"
+        # set_fact:
+        #   port: "{{ portname.stdout_lines[0]}}"
+        #   negot: "{{ portnegotiation.stdout_lines[0]}}"
+      # - name: Print 
+      #   debug:
+      #     msg: "{{ port_list }}"
+      #   loop: "{{ port_list.results | map(attribute='stdout_lines') | flatten }}"
+      # - name: Set Fact List
+      #     final_list: "{{portname}},{{portnegotiation}}"
+      #   set_fact:
+      #     portname: "{{ interfaces.stdout | regex_search('Name:') }}"
+      # - name: set fact Print
+      #   debug:
+      #     msg: "{{ portname }}"
+      
   when:
       - cisc_l2_000200
   tags:

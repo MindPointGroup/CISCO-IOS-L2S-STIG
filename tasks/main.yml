@@ -1,6 +1,31 @@
 ---
-- name: GATHER SWITCH FACTS
-  ios_facts:
+# This code below is used to store the results to a actual file.  
+- name: Show Run TEST
+  cisco.ios.ios_command:
+    commands:
+        - show version | incl serial
+  register: serial_number
+
+- name: Register Serial Output
+  debug:
+      msg: "{{ item }}"
+  with_items: "{{ serial_number.stdout_lines }}"
+  when: "'Motherboard' in item"
+
+- name: Print Output 
+  debug:
+      msg: "{{ serial_number.stdout_lines }}" 
+
+# Display Facts About Cisco Device You Are Making Compliant
+- name: Display Some Facts About Cisco Device
+  debug:
+      msg: 
+        - "The Model Number is {{ ansible_net_model }}"
+        - "The Hostname is {{ ansible_net_hostname }}"
+        - "The System Is Running: {{ ansible_net_iostype }}"
+        - "Version: {{ ansible_net_version }}"
+        - "{{ serial_number.stdout_lines }}"
+  
 
 - name: Include CAT 1 patches
   import_tasks: fix-cat1.yml
@@ -22,3 +47,28 @@
   tags:
       - CAT3
       - low
+
+
+
+
+
+
+
+# - name: Gather Ansible Facts For Cisco IOS
+#   cisco.ios.ios_facts:
+#     gather_subset: all
+#   register: facts_output
+
+# - name: Print Cisco ios_facts
+#   debug:
+#       msg: "{{ facts_output }}"
+
+# - name: Print Host Name
+#   debug:
+#       msg: You are using host "{{ ansible_net_hostname }}"
+
+
+
+# - name: Show the Output For Interface 0/24
+#   debug:
+#       msg: "{{ ansible_net_interfaces }}"

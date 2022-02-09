@@ -1,13 +1,47 @@
 ---
-- name: "HIGH | CISC-L2-000020 | PATCH | The Cisco switch must uniquely identify all network-connected endpoint devices before establishing any connection."
-  ios_command:
-      commands: echo true
-  when:
-      - cisc_l2_000020
-  tags:
-      - CISC-L2-000020
-      - CAT1
-      - CCI-000778
-      - SRG-NET-000148-L2S-000015
-      - SV-220623r539671_rule
-      - V-220623
+
+# - name: " Get Cisco Device Run File "
+#   cisco.ios.ios_command:
+#     commands:
+#        - show run
+#   register: run_config
+
+# - name: Print run_config
+#   debug:
+#       msg: "{{ run_config }}"
+
+
+# # This code below is used to store the results to a actual file.  
+# - name: Show Run
+#   cisco.ios.ios_command:
+#     commands:
+#         - show version
+#         - show run
+#         - show cdp neighbors
+#   register: config
+
+# - name: Print run_config
+#   debug:
+#       msg: "{{ config }}"
+
+
+# - name: Save output to local directory
+#   copy:
+#     content: "{{ config.stdout | replace ('\\n', '\n') }}"
+#     dest: "{{ inventory_hostname }}.ios"
+#     mode: "0777"
+
+
+
+# - name: "HIGH | CISC-L2-000020 | PATCH | The Cisco switch must uniquely identify all network-connected endpoint devices before establishing any connection."
+#   ios_command:
+#       commands: echo true
+#   when:
+#       - cisc_l2_000020
+#   tags:
+#       - CISC-L2-000020
+#       - CAT1
+#       - CCI-000778
+#       - SRG-NET-000148-L2S-000015
+#       - SV-220623r539671_rule
+#       - V-220623
