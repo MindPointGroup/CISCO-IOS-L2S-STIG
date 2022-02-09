@@ -14,29 +14,28 @@
       - SV-220622r539671_rule
       - V-220622
       
-
-
-
       
 - name: "MEDIUM | CISC-L2-000030 | PATCH | The Cisco switch must authenticate all VLAN Trunk Protocol (VTP) messages with a hash function using the most secured cryptographic algorithm available."
   block:
-      - name: Get VTP Mode and Register
+      - name: "MEDIUM | CISC-L2-000030 | PATCH | The Cisco switch must authenticate all VLAN Trunk Protocol (VTP) messages with a hash function using the most secured cryptographic algorithm available. | Get VTP Mode"
         cisco.ios.ios_command:
             commands: 
               - Show vtp status | include VTP Operating Mode
-        register: vtp_mode
+        register: cisc_l2_000030_vtp_mode
 
-      - name: Print vtp_mode
-        debug: 
-            msg: "{{ vtp_mode.stdout }}"
+      - name: "MEDIUM | CISC-L2-000030 | PATCH | The Cisco switch must authenticate all VLAN Trunk Protocol (VTP) messages with a hash function using the most secured cryptographic algorithm available. | Check operating mode is not off"
+        cisco.ios.ios_command:
+            commands: 
+                - show vtp password
+        register: cisc_l2_000030_vtppassword
+        when: '"VTP Operating Mode                : Off" not in vtp_mode.stdout'
 
-      - name: Set Fact For Version
-        set_fact:
-            vtp_mode: "{{ vtp_mode.stdout | regex_search ('Off|Client|Server|Transparent') }}"
-            
-      - name: Print Fact
-        debug:
-            msg: "{{ vtp_mode }}"
+      - name: "MEDIUM | CISC-L2-000030 | PATCH | The Cisco switch must authenticate all VLAN Trunk Protocol (VTP) messages with a hash function using the most secured cryptographic algorithm available. | Set password"
+        cisco.ios.ios_command:  
+            commands:
+                - vtp password {{ iosstig_vtp_user_password }} 
+        changed_when: true
+        when: "'The VTP password is not configured.' in vtppassword.stdout"
   when:
       - cisc_l2_000030
   tags:
@@ -46,12 +45,6 @@
       - SRG-NET-000168-L2S-000019
       - SV-220624r539671_rule
       - V-220624
-
-
-
-
-
-
 
 - name: "MEDIUM | CISC-L2-000040 | PATCH | The Cisco switch must manage excess bandwidth to limit the effects of packet-flooding types of denial-of-service (DoS) attacks."
   block:

@@ -1,7 +1,7 @@
 ---
 iosl2sstig_cat1_patch: false
-iosl2sstig_cat2_patch: false
-iosl2sstig_cat3_patch: true
+iosl2sstig_cat2_patch: true
+iosl2sstig_cat3_patch: false
 
 # We've defined complexity-high to mean that we cannot automatically remediate
 # the rule in question.  In the future this might mean that the remediation
@@ -28,7 +28,7 @@ cisc_l2_000020: true
 
 # CAT 2 rules
 cisc_l2_000010: false
-cisc_l2_000030: false
+cisc_l2_000030: true
 cisc_l2_000040: false
 cisc_l2_000060: false
 cisc_l2_000070: false
@@ -50,7 +50,7 @@ cisc_l2_000250: false
 cisc_l2_000260: false
 
 # CAT 3 rules
-cisc_l2_000090: true
+#cisc_l2_000090: false
 cisc_l2_000160: false
 cisc_l2_000170: false
 cisc_l2_000270: false
@@ -102,11 +102,10 @@ iosstig_non_essential_serv:
 
 
 # CISC-L2-000030
-iosstig_vtp_mode:
-    - Server
-    - Transparent
-    - Client
-    - 'Off'
+# iosstig_vtp_user_password is the password you will change for vtp password. 
+# CHANGE THE DEFAULT!!!!!!!!!!!!!!!
+# MAKE SURE TO VAULT PASSWORDS, PLAIN TEXT PASSWORDS ARE BAD.
+iosstig_vtp_user_password: changeme
 
 
 
@@ -124,6 +123,7 @@ iosstig_vtp_mode:
 
 
 # CAT 3
-
+# CISC-L2-000090
+# iosstig_rootguard_range is the port range for access layer switches.
 iosstig_rootguard_range: 'GigabitEthernet 1/0/8-10'
 
