@@ -1,7 +1,7 @@
 ---
 iosl2sstig_cat1_patch: false
-iosl2sstig_cat2_patch: true
-iosl2sstig_cat3_patch: false
+iosl2sstig_cat2_patch: false
+iosl2sstig_cat3_patch: true
 
 # We've defined complexity-high to mean that we cannot automatically remediate
 # the rule in question.  In the future this might mean that the remediation
@@ -28,7 +28,7 @@ cisc_l2_000020: true
 
 # CAT 2 rules
 cisc_l2_000010: false
-cisc_l2_000030: true
+#cisc_l2_000030: false
 cisc_l2_000040: false
 cisc_l2_000060: false
 cisc_l2_000070: false
@@ -50,9 +50,9 @@ cisc_l2_000250: false
 cisc_l2_000260: false
 
 # CAT 3 rules
-#cisc_l2_000090: false
+cisc_l2_000090: false
 cisc_l2_000160: false
-cisc_l2_000170: false
+cisc_l2_000170: true
 cisc_l2_000270: false
 
 
@@ -126,4 +126,23 @@ iosstig_vtp_user_password: changeme
 # CISC-L2-000090
 # iosstig_rootguard_range is the port range for access layer switches.
 iosstig_rootguard_range: 'GigabitEthernet 1/0/8-10'
+
+# CISC-L2-000160
+# iosstig_storm_control_range is the port range for setting storm control on all host facing switchports. 
+# Here are some examples of the values excpeted in the range
+# GigabitEthernet 1/0/8-10 <-- Ports 8-10
+# GigabitEthernet 1/0/8-10, GigabitEthernet 1/0/13  <---- Ports 8-10 and 13
+iosstig_storm_control_range: "GigabitEthernet 1/0/8-10"
+# iosstig_unicast_bps_value is the bps value
+# Older L2 switches require level as a step before setting bps. This var requires this level bps.
+# for example the value would be "level bps 62000000" for those older switches and
+# the value would be "bps 62000000" for new switches
+iosstig_unicast_bps_value: "level bps 62000000"
+# iosstig_unicast_bps_value is the bps value
+# Older L2 switches require level as a step before setting bps. This var requires this level bps.
+# for example the value would be "level bps 20000000" for those older switches and
+# the value would be "bps 20000000" for new switches
+iosstig_broadcast_bps_value: "level bps 20000000"
+
+
 

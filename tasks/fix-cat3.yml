@@ -15,8 +15,12 @@
       - V-220629
 
 - name: "LOW | CISC-L2-000160 | PATCH | The Cisco switch must have Storm Control configured on all host-facing switchports."
-  ios_command:
-      commands: echo true
+  cisco.ios.ios_config:  
+      lines:
+          - interface range {{ iosstig_storm_control_range }}
+          - storm-control unicast {{ iosstig_unicast_bps_value }}
+          - storm-control broadcast {{ iosstig_broadcast_bps_value }}
+  # notify: copy config
   when:
       - cisc_l2_000160
   tags:
@@ -29,35 +33,24 @@
 
 - name: "LOW | CISC-L2-000170 | PATCH | The Cisco switch must have IGMP or MLD Snooping configured on all VLANs."
   block:
-      - name: Verify No IP IGMP Snooping is in the config file
+      - name: "LOW | CISC-L2-000170 | PATCH | The Cisco switch must have IGMP or MLD Snooping configured on all VLANs. | Enable IGMP"
+        cisco.ios.ios_config:
+            commands: 
+                - ip igmp snooping 
+
+      - name: "LOW | CISC-L2-000170 | PATCH | The Cisco switch must have IGMP or MLD Snooping configured on all VLANs. | Get Snooping Status"
         cisco.ios.ios_command:
           commands:
             - show run | include no ip igmp    
-        register: igmp
-      - name: Set Fact For IGMP
-        set_fact:
-            igmp_mode: "{{ igmp.stdout | regex_search ('no ip igmp snooping') }}"   
-      - name: Print Fact
-        debug:
-          msg: Your Switch Currently Has IGMP Snooping Configured As "{{ igmp_mode }}" 
-      - name: Enable IGMP On Switch
+        register: cisc_l2_000170_igmp_status
+
+      - name: "LOW | CISC-L2-000170 | PATCH | The Cisco switch must have IGMP or MLD Snooping configured on all VLANs. | Enable IGMP"
         cisco.ios.ios_config:
             commands: 
-                - ip igmp snooping
-        when: 
-            - igmp_mode|length > 0
-
-
-      - name: If Global IGMP Is Set Enabled Verify no IGMP is not turned off on vlan's
-        cisco.ios.ios_command:
-          commands:
-            - show run | include no ip igmp snooping vlan
-        register: igmpvlan
-      - name: Show IGMP VLAN output 
-        debug:
-          msg: YOU ARE NOT IN COMPLIANCE YOUR GLOABLLY IGMP IS ENABLED BUT YOU STILL HAVE VLANS SHUT OFF
-        when:
-            - igmp_mode|length == 0 and igmpvlan|length > 0
+                - ip igmp snooping vlan {{ item }}
+        with_items:
+            - "{{ cisc_l2_000170_igmp_status.stdout | regex_findall('[0-9]+') | list }}"
+        when: cisc_l2_000170_igmp_status.stdout | length > 0
   when:
       - cisc_l2_000170
   tags:
