@@ -30,7 +30,7 @@
         register: cisc_l2_000030_vtppassword
         when: '"VTP Operating Mode                : Off" not in vtp_mode.stdout'
 
-      - name: "MEDIUM | CISC-L2-000030 | PATCH | The Cisco switch must authenticate all VLAN Trunk Protocol (VTP) messages with a hash function using the most secured cryptographic algorithm available. | Set password"
+      - name: MEDIUM | CISC-L2-000030 | PATCH | The Cisco switch must authenticate all VLAN Trunk Protocol (VTP) messages with a hash function using the most secured cryptographic algorithm available. | Set password"
         cisco.ios.ios_command:  
             commands:
                 - vtp password {{ iosstig_vtp_user_password }} 
@@ -47,20 +47,9 @@
       - V-220624
 
 - name: "MEDIUM | CISC-L2-000040 | PATCH | The Cisco switch must manage excess bandwidth to limit the effects of packet-flooding types of denial-of-service (DoS) attacks."
-  block:
-    - name: Run mls qos in global config
-      cisco.ios.ios_config:
-          commands: 
-              - mls qos
-      register: mls
-    - name: print str data if nothing there
-      debug: 
-        msg: "{{ mls }}"
-    - name: Produce error message when MLS QOS is not a option on Device.  
-      debug:
-        msg: Your Cisco Device Does Not Support MLS QOS **** THIS IS A FINDING ****
-      when:
-          - mls.rc == 1
+  cisco.ios.ios_config:
+      lines: 
+          - mls qos
   when:
       - cisc_l2_000040
       # - ansible.facts.version >= 12.1
@@ -73,9 +62,21 @@
       - V-220625
 
 - name: "MEDIUM | CISC-L2-000060 | PATCH | The Cisco switch must be configured for authorized users to select a user session to capture."
-  cisco.ios.ios_command:
-      commands: 
-        - Show vtp status | include VTP Operating Mode
+  block:
+      - name: "MEDIUM | CISC-L2-000060 | PATCH | The Cisco switch must be configured for authorized users to select a user session to capture."
+        cisco.ios.ios_config:
+            lines: 
+              - monitor session {{ item }}
+            
+        with_items:
+            - "{{ iosstig_monitor_session_source }}"
+
+      - name: "MEDIUM | CISC-L2-000060 | PATCH | The Cisco switch must be configured for authorized users to select a user session to capture."
+        cisco.ios.ios_config:
+            lines:
+              - monitor session {{ item }}
+        with_items:
+            - "{{ iosstig_monitor_session_destination }}"
   when:
       - cisc_l2_000060
   tags:
