@@ -1,7 +1,7 @@
 ---
 iosl2sstig_cat1_patch: false
-iosl2sstig_cat2_patch: true
-iosl2sstig_cat3_patch: false
+iosl2sstig_cat2_patch: false
+iosl2sstig_cat3_patch: true
 
 # We've defined complexity-high to mean that we cannot automatically remediate
 # the rule in question.  In the future this might mean that the remediation
@@ -41,7 +41,7 @@ cisc_l2_000140: false
 cisc_l2_000150: false
 cisc_l2_000180: false
 cisc_l2_000190: false
-cisc_l2_000200: true
+cisc_l2_000200: false
 cisc_l2_000210: false
 cisc_l2_000220: false
 cisc_l2_000230: false
@@ -50,7 +50,7 @@ cisc_l2_000250: false
 cisc_l2_000260: false
 
 # CAT 3 rules
-cisc_l2_000090: false
+cisc_l2_000090: true
 cisc_l2_000160: false
 cisc_l2_000170: false
 cisc_l2_000270: false
@@ -95,7 +95,12 @@ iosstig_non_essential_serv:
     - service pad
 
 
-    
+
+
+
+
+
+
 # CISC-L2-000030
 iosstig_vtp_mode:
     - Server
@@ -104,10 +109,21 @@ iosstig_vtp_mode:
     - 'Off'
 
 
+
+
+
+
 # CISC-L2-000110
 # The STP loop guard feature provides additional protection against STP loops. 
 # An STP loop is created when an STP blocking port in a redundant topology erroneously 
 # transitions to the forwarding state. In its operation, STP relies on continuous 
 # reception and transmission of BPDUs based on the port role. 
 # iosstig_stp_loop_guard:
+
+
+
+
+# CAT 3
+
+iosstig_rootguard_range: 'GigabitEthernet 1/0/8-10'
 
