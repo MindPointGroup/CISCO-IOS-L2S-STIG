@@ -15,7 +15,7 @@
 #Router3 ansible_host=192.168.68.233
 
 #Define Host By Hostname
-#mrsteve.tplinkdns.com
+#test.dyndns.com
 
 [cisco:vars] 
 ansible_network_os=cisco.ios.ios 
