@@ -155,8 +155,9 @@
       - V-220632
 
 - name: "MEDIUM | CISC-L2-000130 | PATCH | The Cisco switch must have DHCP snooping for all user VLANs to validate DHCP messages from untrusted sources."
-  ios_command:
-      commands: echo true
+  cisco.ios.ios_config:
+        lines: 
+          - ip dhcp snooping vlan {{ iosstig_user_vlans }}
   when:
       - cisc_l2_000130
   tags:
@@ -181,8 +182,9 @@
       - V-220634
 
 - name: "MEDIUM | CISC-L2-000150 | PATCH | The Cisco switch must have Dynamic Address Resolution Protocol (ARP) Inspection (DAI) enabled on all user VLANs."
-  ios_command:
-      commands: echo true
+  cisco.ios.ios_config:
+        lines: 
+          - ip arp inspection vlan {{ iosstig_user_vlans }}
   when:
       - cisc_l2_000150
   tags:

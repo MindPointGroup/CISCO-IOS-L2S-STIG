@@ -24,13 +24,13 @@ change_requires_reboot: false
 # in order for the variables below to take effect.
 
 # CAT 1 rules
-cisc_l2_000020: true
+cisc_l2_000020: false
 
 # CAT 2 rules
 cisc_l2_000010: false
 cisc_l2_000030: false
 cisc_l2_000040: false
-cisc_l2_000060: true
+cisc_l2_000060: false
 cisc_l2_000070: false
 cisc_l2_000080: false
 cisc_l2_000100: false
@@ -54,6 +54,27 @@ cisc_l2_000090: true
 cisc_l2_000160: true
 cisc_l2_000170: true
 cisc_l2_000270: true
+
+
+
+# CISC-L2-000130
+# CISC-L2-000150
+
+# iosstig_user_vlans
+# iosstig_user_vlans is the list of vlans that are user facing.  
+# Per The STIG they are labled as user VLANs
+# Here are some examples of the values excpeted in the range
+# 50 <--- Single Vlan To Fix
+# 50,60  <--- Two Seperate Vlans To Fix
+# 50-60 <--- Vlans Range 50-60 To Fix
+# 2,10-15,50-60,75,300   <--- Vlans 2, 10-15, 50-60, 75, 300
+iosstig_user_vlans: "60,68-70,600,1000"
+
+
+
+ 
+
+
 
 
 
@@ -94,6 +115,11 @@ iosstig_non_essential_serv:
     - service udp-small-servers
     - service pad
 
+# CISC-L2-000030
+# iosstig_vtp_user_password is the password you will change for vtp password. 
+# CHANGE THE DEFAULT!!!!!!!!!!!!!!!
+# MAKE SURE TO VAULT PASSWORDS, PLAIN TEXT PASSWORDS ARE BAD.
+iosstig_vtp_user_password: changeme
 
 # CISC-L2-000060
 iosstig_monitor_session_source:
@@ -111,13 +137,6 @@ iosstig_monitor_session_destination:
 
 
 
-# CISC-L2-000030
-# iosstig_vtp_user_password is the password you will change for vtp password. 
-# CHANGE THE DEFAULT!!!!!!!!!!!!!!!
-# MAKE SURE TO VAULT PASSWORDS, PLAIN TEXT PASSWORDS ARE BAD.
-iosstig_vtp_user_password: changeme
-
-
 
 
 
@@ -130,8 +149,6 @@ iosstig_vtp_user_password: changeme
 # iosstig_stp_loop_guard:
 
 
-
-
 # CAT 3
 # CISC-L2-000090
 # iosstig_rootguard_range is the port range for access layer switches.
@@ -140,8 +157,8 @@ iosstig_rootguard_range: 'GigabitEthernet 1/0/8-10'
 # CISC-L2-000160
 # iosstig_storm_control_range is the port range for setting storm control on all host facing switchports. 
 # Here are some examples of the values excpeted in the range
-# GigabitEthernet 1/0/8-10 <-- Ports 8-10
-# GigabitEthernet 1/0/8-10, GigabitEthernet 1/0/13  <---- Ports 8-10 and 13
+# GigabitEthernet 1/0/8-10 <--- Ports 8-10
+# GigabitEthernet 1/0/8-10, GigabitEthernet 1/0/13  <--- Ports 8-10 and 13
 iosstig_storm_control_range: "GigabitEthernet 1/0/8-10"
 # iosstig_unicast_bps_value is the bps value
 # Older L2 switches require level as a step before setting bps. This var requires this level bps.
