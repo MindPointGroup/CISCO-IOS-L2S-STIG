@@ -169,8 +169,10 @@
       - V-220633
 
 - name: "MEDIUM | CISC-L2-000140 | PATCH | The Cisco switch must have IP Source Guard enabled on all user-facing or untrusted access switch ports."
-  ios_command:
-      commands: echo true
+  cisco.ios.ios_config:
+      lines:
+          - interface range {{ iosstig_sourceguard_option }}
+          - ip verify source
   when:
       - cisc_l2_000140
   tags:
