@@ -198,8 +198,28 @@
       - V-220635
 
 - name: "MEDIUM | CISC-L2-000180 | PATCH | The Cisco switch must implement Rapid Spanning Tree Protocol (STP) where VLANs span multiple switches with redundant links."
-  ios_command:
-      commands: echo true
+  block:
+      - name: "MEDIUM | CISC-L2-000180 | PATCH | The Cisco switch must implement Rapid Spanning Tree Protocol (STP) where VLANs span multiple switches with redundant links. | Set Spanning Tree Mode."
+        cisco.ios.ios_config:
+            lines: 
+              - spanning-tree mode {{ iosstig_spanningtree_mode }}
+
+      - name: "MEDIUM | CISC-L2-000180 | PATCH | The Cisco switch must implement Rapid Spanning Tree Protocol (STP) where VLANs span multiple switches with redundant links. | Wait For Change."
+        wait_for_connection:
+          delay: 35
+          timeout: 40
+
+      - name: "MEDIUM | CISC-L2-000180 | PATCH | The Cisco switch must implement Rapid Spanning Tree Protocol (STP) where VLANs span multiple switches with redundant links. Prune VLAN's From Spanning-Tree."
+        cisco.ios.ios_config:
+            lines: 
+              - no spanning-tree vlan {{ iosstig_spanningtree_remove_vlans }}
+        when: "'none' not in iosstig_spanningtree_remove_vlans"
+
+      - name: "MEDIUM | CISC-L2-000180 | PATCH | The Cisco switch must implement Rapid Spanning Tree Protocol (STP) where VLANs span multiple switches with redundant links. | Add VLAN's Back Into Spanning-Tree."
+        cisco.ios.ios_config:
+            lines: 
+              - spanning-tree vlan {{ iosstig_spanningtree_add_vlans }}
+        when: "'none' not in iosstig_spanningtree_add_vlans"  
   when:
       - cisc_l2_000180
   tags:

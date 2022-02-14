@@ -37,9 +37,9 @@ cisc_l2_000100: false
 cisc_l2_000110: false
 cisc_l2_000120: false
 cisc_l2_000130: false
-cisc_l2_000140: true
+cisc_l2_000140: false
 cisc_l2_000150: false
-cisc_l2_000180: false
+cisc_l2_000180: true
 cisc_l2_000190: false
 cisc_l2_000200: false
 cisc_l2_000210: false
@@ -166,6 +166,31 @@ iosstig_user_vlans: "60,68-70,600,1000"
 
 
 
+#CISC-L2-000180
+# iosstig_spanningtree_mode is the mode to set for spanning 
+# tree for vlans across switches. 
+# The Cisco switch must implement Rapid Spanning Tree Protocol (STP) or
+# Multiple Spanning-Tree Protocol (MSTP). The latter scales much better 
+# when there are many VLANs that span multiple switches with redundant links.
+# Only two options are available are as follows to be stig compliant.
+# rapid-pvst <--- Rapid Spanning Tree Protocol Per VLAN
+# mst <--- Multiple Spanning-Tree Protocol
+iosstig_spanningtree_mode: "rapid-pvst"
+
+# In cases where VLANs do not span multiple switches, it is a best practice to 
+# not implement STP.  in this case you will put those VLANs in the
+# Here are some examples of the values excpeted in the range iosstig_spanningtree_remove_vlans.
+# If there are VLANs that are not in STP and they need to be readded add them to the 
+# iosstig_spanningtree_add_vlans variable.  If you have nothing to adjust they may
+# will need to have
+# none <--- This bypasses add/remove of VLANs.   
+# 50 <--- Single Vlan 
+# 50,60  <--- Two Seperate Vlans 
+# 50-60 <--- Vlans Range 50-60 
+# 2,10-15,50-60,75,300   <--- Vlans 2, 10-15, 50-60, 75, 300
+iosstig_spanningtree_remove_vlans: "none"
+iosstig_spanningtree_add_vlans: "50,60"
+
 
 
 
@@ -181,7 +206,7 @@ iosstig_user_vlans: "60,68-70,600,1000"
 # GigabitEthernet 1/0/8 <--- Port 8
 # GigabitEthernet 1/0/8-10 <--- Ports 8-10
 # GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13  <--- Ports 8-10 and 13
-iosstig_rootguard_range: 'GigabitEthernet 1/0/8-10'
+iosstig_rootguard_range: "GigabitEthernet 1/0/8-10"
 
 
 
