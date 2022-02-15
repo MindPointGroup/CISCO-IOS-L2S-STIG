@@ -40,7 +40,7 @@ cisc_l2_000130: false
 cisc_l2_000140: false
 cisc_l2_000150: false
 cisc_l2_000180: false
-cisc_l2_000190: true
+cisc_l2_000190: false
 cisc_l2_000200: false
 cisc_l2_000210: false
 cisc_l2_000220: false
@@ -111,13 +111,24 @@ iosstig_non_essential_serv:
 iosstig_vtp_user_password: changeme
 
 # CISC-L2-000060
-iosstig_monitor_session_source:
+# iosstig_capture_session_source & iosstig_capture_session_destination allow authorized 
+# user to capture a session for investigation purposes. the examples below are just the basics required to be 
+# stig compliant, you may capture three interfaces for one session and push them to one destination interface.
+# Please refer to the link below for additional variables that may be applied to the examples bwlow.
+# https://www.cisco.com/c/en/us/td/docs/routers/nfvis/switch_command/b-nfvis-switch-command-reference/monitor_commands.pdf
+# Below are examples of the configurations that can be applied.  
+# none <--- when placed in iosstig_capture_session_source & iosstig_capture_session_destination this bypasses the configuration of source and destination session monitoring.
+# 1 source interface GigabitEthernet 1/0/13  <--- 1 denotes the session number then source and destination direct flow, 
+# followed by the interfaces it will be sent or gathered from.  You may setup more then just 1 session in the configuration below.  
+iosstig_capture_session_source:
     - "1 source interface GigabitEthernet 1/0/13"
     - "2 source interface GigabitEthernet 1/0/14"
-
-iosstig_monitor_session_destination:
+iosstig_capture_session_destination:
     - "1 destination interface GigabitEthernet 1/0/15"
     - "2 destination interface GigabitEthernet 1/0/16"
+
+
+
 
 
 # CISC-L2-000110
@@ -145,7 +156,6 @@ iosstig_sourceguard_userfacing_ports: "GigabitEthernet 1/0/8-10,GigabitEthernet 
 # GigabitEthernet 1/0/8 <--- Port 8
 # GigabitEthernet 1/0/8-10 <--- Ports 8-10
 # GigabitEthernet 1/0/13,GigabitEthernet 1/0/8-10  <--- Ports 8-10 and 13
-# The interfaces do not have to be in order for this to work but make sure 
 iosstig_sourceguard_untrusted_ports: "GigabitEthernet 1/0/13"
 
 
@@ -167,8 +177,7 @@ iosstig_user_vlans: "60,68-70,600,1000"
 
 
 # CISC-L2-000180
-# iosstig_spanningtree_mode is the mode to set for spanning 
-# tree for vlans across switches. 
+# iosstig_spanningtree_mode is the mode to set for spanning tree for vlans across switches. 
 # The Cisco switch must implement Rapid Spanning Tree Protocol (STP) or
 # Multiple Spanning-Tree Protocol (MSTP). The latter scales much better 
 # when there are many VLANs that span multiple switches with redundant links.
@@ -177,11 +186,10 @@ iosstig_user_vlans: "60,68-70,600,1000"
 # mst <--- Multiple Spanning-Tree Protocol
 iosstig_spanningtree_mode: "rapid-pvst"
 # In cases where VLANs do not span multiple switches, it is a best practice to 
-# not implement STP.  in this case you will put those VLANs in the
-# Here are some examples of the values excpeted in the range iosstig_spanningtree_remove_vlans.
+# not implement STP.  In this case you will put those VLANs in the iosstig_spanningtree_remove_vlans
 # If there are VLANs that are not in STP and they need to be readded add them to the 
-# iosstig_spanningtree_add_vlans variable.  If you have nothing to adjust they may
-# will need to have
+# iosstig_spanningtree_add_vlans variable.  If you have nothing to adjust then make sure yo have none in the variables.
+# Here are some examples of the values excpeted in the range.
 # none <--- This bypasses add/remove of VLANs.   
 # 50 <--- Single Vlan 
 # 50,60  <--- Two Seperate Vlans 

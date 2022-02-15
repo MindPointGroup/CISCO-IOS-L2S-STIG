@@ -52,7 +52,6 @@
           - mls qos
   when:
       - cisc_l2_000040
-      # - ansible.facts.version >= 12.1
   tags:
       - CISC-L2-000040
       - CAT2
@@ -68,14 +67,16 @@
             lines: 
               - monitor session {{ item }}
         with_items:
-            - "{{ iosstig_monitor_session_source }}"
+            - "{{ iosstig_capture_session_source }}"
+        when: "'none' not in iosstig_capture_session_source"
 
       - name: "MEDIUM | CISC-L2-000060 | PATCH | The Cisco switch must be configured for authorized users to select a user session to capture."
         cisco.ios.ios_config:
             lines:
               - monitor session {{ item }}
         with_items:
-            - "{{ iosstig_monitor_session_destination }}"
+            - "{{ iosstig_capture_session_destination }}"
+        when: "'none' not in iosstig_capture_session_destination"
   when:
       - cisc_l2_000060
   tags:
