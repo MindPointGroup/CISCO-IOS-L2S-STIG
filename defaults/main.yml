@@ -30,10 +30,10 @@ cisc_l2_000020: false
 cisc_l2_000010: false
 cisc_l2_000030: false
 cisc_l2_000040: false
-cisc_l2_000060: true
-cisc_l2_000070: true
+cisc_l2_000060: false
+cisc_l2_000070: false
 cisc_l2_000080: false
-cisc_l2_000100: false
+cisc_l2_000100: true
 cisc_l2_000110: false
 cisc_l2_000120: false
 cisc_l2_000130: false
@@ -123,8 +123,8 @@ iosstig_vtp_user_password: changeme
 #####################################################################################
 #####################################################################################
 # iosstig_capture_session_source & iosstig_capture_session_destination allow authorized 
-# user to capture a session for investigation purposes. the examples below are just the basics required to be 
-# stig compliant, you may capture three interfaces for one session and push them to one destination interface.
+# user to capture a session for investigation purposes. The examples below are just the 
+# basics required to be stig compliant.
 # Please refer to the link below for additional variables that may be applied to the examples bwlow.
 # https://www.cisco.com/c/en/us/td/docs/routers/nfvis/switch_command/b-nfvis-switch-command-reference/monitor_commands.pdf
 # Below are examples of the configurations that can be applied.  
@@ -141,8 +141,8 @@ iosstig_capture_session_destination:
 
 # CISC-L2-000070
 # iosstig_remoteview_session_source & iosstig_remoteview_session_destination allow authorized 
-# user to capture a session for investigation purposes. the examples below are just the basics required to be 
-# stig compliant, you may capture three interfaces for one session and push them to one destination interface.
+# user to capture a session for investigation purposes. The examples below are just the 
+# basics required to be stig compliant.
 # Please refer to the link below for additional variables that may be applied to the examples bwlow.
 # https://www.cisco.com/c/en/us/td/docs/routers/nfvis/switch_command/b-nfvis-switch-command-reference/monitor_commands.pdf
 # Below are examples of the configurations that can be applied.  
@@ -155,7 +155,20 @@ iosstig_remoteview_session_source:
 iosstig_remoteview_session_destination:
     - "none"
 
-
+# CISC-L2-000100
+# iosstig_bpdu_guard_global allows you set BPDU Guard globally on a layer 2 switch.
+# none <--- This bypasses control. 
+# enable <--- This will set global BPDU Guard
+iosstig_bpdu_guard_global: "enable"
+# iosstig_bpdu_guard_interface allows the user to set BPDU Guard on specific ports on the switch
+# NOTE: Enable BPDU Guard on all user-facing or untrusted access switch ports as shown in the 
+# configuration example below:
+# none <--- This bypasses control. 
+# Here are some examples of the values expectted in the range.
+# GigabitEthernet 1/0/8 <--- Port 8
+# GigabitEthernet 1/0/8-10 <--- Ports 8-10
+# GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13  <--- Ports 8-10 and 13
+iosstig_bpdu_guard_interface: "none"
 
 
 # CISC-L2-000110
