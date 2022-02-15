@@ -62,7 +62,7 @@
 
 - name: "MEDIUM | CISC-L2-000060 | PATCH | The Cisco switch must be configured for authorized users to select a user session to capture."
   block:
-      - name: "MEDIUM | CISC-L2-000060 | PATCH | The Cisco switch must be configured for authorized users to select a user session to capture."
+      - name: "MEDIUM | CISC-L2-000060 | PATCH | The Cisco switch must be configured for authorized users to select a user session to capture. | Set Source Interfaces"
         cisco.ios.ios_config:
             lines: 
               - monitor session {{ item }}
@@ -70,7 +70,7 @@
             - "{{ iosstig_capture_session_source }}"
         when: "'none' not in iosstig_capture_session_source"
 
-      - name: "MEDIUM | CISC-L2-000060 | PATCH | The Cisco switch must be configured for authorized users to select a user session to capture."
+      - name: "MEDIUM | CISC-L2-000060 | PATCH | The Cisco switch must be configured for authorized users to select a user session to capture. | Set Destination Interfaces"
         cisco.ios.ios_config:
             lines:
               - monitor session {{ item }}
@@ -88,8 +88,22 @@
       - V-220626
 
 - name: "MEDIUM | CISC-L2-000070 | PATCH | The Cisco switch must be configured for authorized users to remotely view, in real time, all content related to an established user session from a component separate from the Cisco switch."
-  ios_command:
-      commands: echo true
+  block:
+      - name: "MEDIUM | CISC-L2-000070 | PATCH | The Cisco switch must be configured for authorized users to remotely view, in real time, all content related to an established user session from a component separate from the Cisco switch. | Set Source Interfaces"
+        cisco.ios.ios_config:
+            lines: 
+              - monitor session {{ item }}
+        with_items:
+            - "{{ iosstig_remoteview_session_source }}"
+        when: "'none' not in iosstig_remoteview_session_source"
+
+      - name: "MEDIUM | CISC-L2-000070 | PATCH | The Cisco switch must be configured for authorized users to remotely view, in real time, all content related to an established user session from a component separate from the Cisco switch. | Set Destination Interfaces"
+        cisco.ios.ios_config:
+            lines:
+              - monitor session {{ item }}
+        with_items:
+            - "{{ iosstig_remoteview_session_destination }}"
+        when: "'none' not in iosstig_remoteview_session_destination"
   when:
       - cisc_l2_000070
   tags:

@@ -30,8 +30,8 @@ cisc_l2_000020: false
 cisc_l2_000010: false
 cisc_l2_000030: false
 cisc_l2_000040: false
-cisc_l2_000060: false
-cisc_l2_000070: false
+cisc_l2_000060: true
+cisc_l2_000070: true
 cisc_l2_000080: false
 cisc_l2_000100: false
 cisc_l2_000110: false
@@ -110,13 +110,25 @@ iosstig_non_essential_serv:
 # MAKE SURE TO VAULT PASSWORDS, PLAIN TEXT PASSWORDS ARE BAD.
 iosstig_vtp_user_password: changeme
 
+
+
 # CISC-L2-000060
+#####################################################################################
+#####################################################################################
+###### BE AWARE CISC-L2-000070 HAS SIMILAR CONTROLS MAKE SURE SESSION NUMBER   ######
+###### AND INTERFACES DO NOT OVERLAP ON THESE TWO CONTROLS. ONE CAN MONITOR    ######
+###### AND THE OTHER ALLOWS FOR REMOTEVIEW IN REAL TIME. BE AWARE CERTAIN      ######
+###### SWITCHES HAVE A LIMITED NUMBER OF SOURCE SESSIONS.  TESTING WAS DONE ON ######
+###### A SWITCH THAT ALLOWS FOR ONLY 2 SOURCE SESSIONS.                        ######
+#####################################################################################
+#####################################################################################
 # iosstig_capture_session_source & iosstig_capture_session_destination allow authorized 
 # user to capture a session for investigation purposes. the examples below are just the basics required to be 
 # stig compliant, you may capture three interfaces for one session and push them to one destination interface.
 # Please refer to the link below for additional variables that may be applied to the examples bwlow.
 # https://www.cisco.com/c/en/us/td/docs/routers/nfvis/switch_command/b-nfvis-switch-command-reference/monitor_commands.pdf
 # Below are examples of the configurations that can be applied.  
+# NOTE: RANGES ARE NOT VALID HERE
 # none <--- when placed in iosstig_capture_session_source & iosstig_capture_session_destination this bypasses the configuration of source and destination session monitoring.
 # 1 source interface GigabitEthernet 1/0/13  <--- 1 denotes the session number then source and destination direct flow, 
 # followed by the interfaces it will be sent or gathered from.  You may setup more then just 1 session in the configuration below.  
@@ -127,6 +139,21 @@ iosstig_capture_session_destination:
     - "1 destination interface GigabitEthernet 1/0/15"
     - "2 destination interface GigabitEthernet 1/0/16"
 
+# CISC-L2-000070
+# iosstig_remoteview_session_source & iosstig_remoteview_session_destination allow authorized 
+# user to capture a session for investigation purposes. the examples below are just the basics required to be 
+# stig compliant, you may capture three interfaces for one session and push them to one destination interface.
+# Please refer to the link below for additional variables that may be applied to the examples bwlow.
+# https://www.cisco.com/c/en/us/td/docs/routers/nfvis/switch_command/b-nfvis-switch-command-reference/monitor_commands.pdf
+# Below are examples of the configurations that can be applied.  
+# NOTE: RANGES ARE NOT VALID HERE
+# none <--- when placed in iosstig_remoteview_session_source & iosstig_remoteview_session_destination this bypasses the configuration of source and destination session monitoring.
+# 1 source interface GigabitEthernet 1/0/13  <--- 1 denotes the session number then source and destination direct flow, 
+# followed by the interfaces it will be sent or gathered from.  You may setup more then just 1 session in the configuration below.  
+iosstig_remoteview_session_source:
+    - "none"
+iosstig_remoteview_session_destination:
+    - "none"
 
 
 
