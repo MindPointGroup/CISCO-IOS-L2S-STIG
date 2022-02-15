@@ -231,8 +231,19 @@
       - V-220638
 
 - name: "MEDIUM | CISC-L2-000190 | PATCH | The Cisco switch must enable Unidirectional Link Detection (UDLD) to protect against one-way connections."
-  ios_command:
-      commands: echo true
+  block:
+      - name: "MEDIUM | CISC-L2-000190 | PATCH | The Cisco switch must enable Unidirectional Link Detection (UDLD) to protect against one-way connections. | Global UDLD Enable"
+        cisco.ios.ios_config:
+            lines: 
+              - udld enable
+        when: "'none' not in iosstig_udld_global"
+
+      - name: "MEDIUM | CISC-L2-000190 | PATCH | The Cisco switch must enable Unidirectional Link Detection (UDLD) to protect against one-way connections. | Interface UDLD Enable"
+        cisco.ios.ios_config:
+            lines:
+              - interface range {{ iosstig_udld_interface }} 
+              - udld port
+        when: "'none' not in iosstig_udld_interface"
   when:
       - cisc_l2_000190
   tags:

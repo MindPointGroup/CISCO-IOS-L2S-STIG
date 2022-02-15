@@ -39,8 +39,8 @@ cisc_l2_000120: false
 cisc_l2_000130: false
 cisc_l2_000140: false
 cisc_l2_000150: false
-cisc_l2_000180: true
-cisc_l2_000190: false
+cisc_l2_000180: false
+cisc_l2_000190: true
 cisc_l2_000200: false
 cisc_l2_000210: false
 cisc_l2_000220: false
@@ -166,7 +166,7 @@ iosstig_user_vlans: "60,68-70,600,1000"
 
 
 
-#CISC-L2-000180
+# CISC-L2-000180
 # iosstig_spanningtree_mode is the mode to set for spanning 
 # tree for vlans across switches. 
 # The Cisco switch must implement Rapid Spanning Tree Protocol (STP) or
@@ -176,7 +176,6 @@ iosstig_user_vlans: "60,68-70,600,1000"
 # rapid-pvst <--- Rapid Spanning Tree Protocol Per VLAN
 # mst <--- Multiple Spanning-Tree Protocol
 iosstig_spanningtree_mode: "rapid-pvst"
-
 # In cases where VLANs do not span multiple switches, it is a best practice to 
 # not implement STP.  in this case you will put those VLANs in the
 # Here are some examples of the values excpeted in the range iosstig_spanningtree_remove_vlans.
@@ -189,7 +188,22 @@ iosstig_spanningtree_mode: "rapid-pvst"
 # 50-60 <--- Vlans Range 50-60 
 # 2,10-15,50-60,75,300   <--- Vlans 2, 10-15, 50-60, 75, 300
 iosstig_spanningtree_remove_vlans: "none"
-iosstig_spanningtree_add_vlans: "50,60"
+iosstig_spanningtree_add_vlans: "none"
+
+
+# CISC-L2-000190
+# iosstig_udld_global allows you set UDLD globally on a layer 2 switch.
+# none <--- This bypasses control. 
+# enable <--- This will set global UDLD
+iosstig_udld_global: "enable"
+# iosstig_udld_interface allows the user to set UDLD on specific ports on the switch
+# none <--- This bypasses control. 
+# Here are some examples of the values excpeted in the range.
+# GigabitEthernet 1/0/8 <--- Port 8
+# GigabitEthernet 1/0/8-10 <--- Ports 8-10
+# GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13  <--- Ports 8-10 and 13
+iosstig_udld_interface: "none"
+
 
 
 
