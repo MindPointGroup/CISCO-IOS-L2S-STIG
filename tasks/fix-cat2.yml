@@ -129,13 +129,13 @@
 
 - name: "MEDIUM | CISC-L2-000100 | PATCH |  The Cisco switch must have Bridge Protocol Data Unit (BPDU) Guard enabled on all user-facing or untrusted access switch ports."
   block:
-      - name: "Global BPDU Guard"
+      - name: "MEDIUM | CISC-L2-000100 | PATCH |  The Cisco switch must have Bridge Protocol Data Unit (BPDU) Guard enabled on all user-facing or untrusted access switch ports. | Global BPDU Guard."
         cisco.ios.ios_config:
             lines: 
               - spanning-tree portfast bpduguard default
         when: "'none' not in iosstig_bpdu_guard_global"
 
-      - name: "Per Interface"
+      - name: "MEDIUM | CISC-L2-000100 | PATCH |  The Cisco switch must have Bridge Protocol Data Unit (BPDU) Guard enabled on all user-facing or untrusted access switch ports. | Per Interface BPDU Guard."
         cisco.ios.ios_config:
             lines:
               - interface range {{ iosstig_bpdu_guard_interface }} 
