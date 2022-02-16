@@ -33,7 +33,7 @@ cisc_l2_000040: false
 cisc_l2_000060: false
 cisc_l2_000070: false
 cisc_l2_000080: false
-cisc_l2_000100: true
+cisc_l2_000100: false
 cisc_l2_000110: false
 cisc_l2_000120: false
 cisc_l2_000130: false
@@ -170,14 +170,14 @@ iosstig_bpdu_guard_global: "enable"
 # GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13  <--- Ports 8-10 and 13
 iosstig_bpdu_guard_interface: "none"
 
-
-# CISC-L2-000110
-# The STP loop guard feature provides additional protection against STP loops. 
-# An STP loop is created when an STP blocking port in a redundant topology erroneously 
-# transitions to the forwarding state. In its operation, STP relies on continuous 
-# reception and transmission of BPDUs based on the port role. 
-# iosstig_stp_loop_guard:
-
+# CISC-L2-000120
+# iosstig_uufb_access_ports allows you to set UUFB which will block unknown unicast traffic 
+# flooding and only permit egress traffic with MAC addresses that are known to exit on the port.
+# Here are some examples of the values excpeted in the port ranges.
+# GigabitEthernet 1/0/8 <--- Port 8
+# GigabitEthernet 1/0/8-10 <--- Ports 8-10
+# GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13  <--- Ports 8-10 and 13
+iosstig_uufb_access_ports: "GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13"
 
 
 # CISC-L2-000140
@@ -213,7 +213,6 @@ iosstig_sourceguard_untrusted_ports: "GigabitEthernet 1/0/13"
 # 50-60 <--- Vlans Range 50-60 To Fix
 # 2,10-15,50-60,75,300   <--- Vlans 2, 10-15, 50-60, 75, 300
 iosstig_user_vlans: "60,68-70,600,1000"
-
 
 # CISC-L2-000180
 # iosstig_spanningtree_mode is the mode to set for spanning tree for vlans across switches. 

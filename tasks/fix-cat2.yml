@@ -166,8 +166,10 @@
       - V-220631
   
 - name: "MEDIUM | CISC-L2-000120 | PATCH | The Cisco switch must have Unknown Unicast Flood Blocking (UUFB) enabled."
-  ios_command:
-      commands: echo true
+  cisco.ios.ios_config:
+      lines:
+        - interface range {{ iosstig_uufb_access_ports }} 
+        - switchport block unicast
   when:
       - cisc_l2_000120
   tags:
