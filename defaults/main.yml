@@ -42,7 +42,7 @@ cisc_l2_000150: false
 cisc_l2_000180: false
 cisc_l2_000190: false
 cisc_l2_000200: false
-cisc_l2_000210: false
+cisc_l2_000210: true
 cisc_l2_000220: false
 cisc_l2_000230: false
 cisc_l2_000240: false
@@ -254,17 +254,27 @@ iosstig_udld_interface: "none"
 # iosstig_trunklink_interfaces is the variable that you will set to use in
 # the following STIG to make sure the switch configuration is set to verify 
 # that trunk links will not form a trunk via negotiation.
+# Here are some examples of the values excpeted in the range.
 # GigabitEthernet 1/0/8 <--- Port 8
 # GigabitEthernet 1/0/8-10 <--- Ports 8-10
 # GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13  <--- Ports 8-10 and 13
 iosstig_trunklink_interfaces: "GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/11"
 
-
-
-
-
-
-
+# CISC-L2-000210
+# iosstig_blackhole_vlan is a vlan that directs inactive ports to a vlan that is inactive.
+# A disabled port that is assigned to a user or management VLAN may become enabled by 
+# accident or by an attacker and as a result may gain access to that VLAN as a member.
+# iosstig_blackhole_vlan_name is the name assigned to the VLAN where you will be directing
+# inactive ports too.  
+iosstig_blackhole_vlan: "999"
+iosstig_blackhole_vlan_name: "BLACKHOLE"
+# iosstig_blackhole_interfaces is a list of all interfaces that will not be used and need to 
+# be assigned to the iosstig_blackhole_vlan. 
+# Here are some examples of the values excpeted in the range.
+# GigabitEthernet 1/0/8 <--- Port 8
+# GigabitEthernet 1/0/8-10 <--- Ports 8-10
+# GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13  <--- Ports 8-10 and 13 
+iosstig_blackhole_interfaces: "GigabitEthernet 1/0/18-20,GigabitEthernet 1/0/22"
 
 
 # CAT 3

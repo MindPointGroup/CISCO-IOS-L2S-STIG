@@ -298,8 +298,25 @@
       - V-220640
 
 - name: "MEDIUM | CISC-L2-000210 | PATCH | The Cisco switch must have all disabled switch ports assigned to an unused VLAN."
-  ios_command:
-      commands: echo true
+  block:
+      - name: "MEDIUM | CISC-L2-000210 | PATCH | The Cisco switch must have all disabled switch ports assigned to an unused VLAN. | Create Blackhole VLAN And Name It."
+        cisco.ios.ios_config:
+            lines: 
+                - vlan {{ iosstig_blackhole_vlan }}
+                - name {{ iosstig_blackhole_vlan_name }}
+
+      - name: "MEDIUM | CISC-L2-000210 | PATCH | The Cisco switch must have all disabled switch ports assigned to an unused VLAN. | Assign Inactive Ports To VLAN and Shutdown."
+        cisco.ios.ios_config:
+            lines: 
+                - interface range {{ iosstig_blackhole_interfaces }}
+                - switchport access vlan {{ iosstig_blackhole_vlan }}
+                - shutdown
+
+      - name: "MEDIUM | CISC-L2-000210 | PATCH | The Cisco switch must have all disabled switch ports assigned to an unused VLAN. | Remove Blackhole VLAN From Trunk Ports."
+        cisco.ios.ios_config:
+            lines: 
+              - interface range {{ iosstig_trunklink_interfaces }}
+              - switchport trunk allowed vlan except {{ iosstig_blackhole_vlan }}
   when:
       - cisc_l2_000210
   tags:
