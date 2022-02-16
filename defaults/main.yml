@@ -215,7 +215,6 @@ iosstig_sourceguard_untrusted_ports: "GigabitEthernet 1/0/13"
 iosstig_user_vlans: "60,68-70,600,1000"
 
 
-
 # CISC-L2-000180
 # iosstig_spanningtree_mode is the mode to set for spanning tree for vlans across switches. 
 # The Cisco switch must implement Rapid Spanning Tree Protocol (STP) or

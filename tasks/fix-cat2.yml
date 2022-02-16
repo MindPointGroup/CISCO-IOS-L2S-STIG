@@ -154,8 +154,7 @@
 - name: "MEDIUM | CISC-L2-000110 | PATCH | The Cisco switch must have Spanning Tree Protocol (STP) Loop Guard enabled."
   cisco.ios.ios_config:
       lines: 
-          - spanning-tree loopguard default
-          - spanning-tree mode pvst
+        - spanning-tree loopguard default
   when:
       - cisc_l2_000110
   tags:
