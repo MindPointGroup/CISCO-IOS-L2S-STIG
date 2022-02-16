@@ -281,59 +281,12 @@
       - V-220639
 
 - name: "MEDIUM | CISC-L2-000200 | PATCH | The Cisco switch must have all trunk links enabled statically."
-  block:
-      - name: Gather Interface Port Names
-        cisco.ios.ios_command:
-            commands: show interfaces switchport | include Name|Negotiation
-        register: portstatus
-      - name: "Port Name"
-        set_fact:
-          test_port: "{{ portname.stdout | regex_findall('Name:.*') | regex_replace('Name: ', '') }}"
-      - name: Print Test Fact
-        debug:
-          msg: "{{ test_port }}"
-      - name: Port Name On/Off
-        set_fact:
-          test_status: "{{ portnegotiation.stdout | regex_findall('Negotiation of Trunking:.*') | regex_replace('Negotiation of Trunking: ', '') }}"
-      - name: Print Test Fact
-        debug:
-          msg: "{{ test_status }}"
-      - name: Error Check
-        debug:
-          msg: "{{ portname }} not compliant"
-        with_items: 
-            - "{{ portnegotiation }}"
-        when: test_status == Off
-
-
-
-
-
-
-
-
-      # - name: Test On Port Name
-      #   debug:
-      #     msg: "{{ portname.stdout_lines[0][0] }}"
-      #   with_items: "{{ portnegotiation.stdout_lines[0][0]}}"
-      # - name: Combine Lists
-      #   set_fact:
-      #     final_list: "{{ portname ~ ',' ~ portnegotiation }}"
-        # set_fact:
-        #   port: "{{ portname.stdout_lines[0]}}"
-        #   negot: "{{ portnegotiation.stdout_lines[0]}}"
-      # - name: Print 
-      #   debug:
-      #     msg: "{{ port_list }}"
-      #   loop: "{{ port_list.results | map(attribute='stdout_lines') | flatten }}"
-      # - name: Set Fact List
-      #     final_list: "{{portname}},{{portnegotiation}}"
-      #   set_fact:
-      #     portname: "{{ interfaces.stdout | regex_search('Name:') }}"
-      # - name: set fact Print
-      #   debug:
-      #     msg: "{{ portname }}"
-      
+  cisco.ios.ios_config:
+      lines:
+        - interface range {{ iosstig_trunklink_interfaces }}
+        - switchport trunk encapsulation dot1q
+        - switchport mode trunk
+        - switchport nonegotiate  
   when:
       - cisc_l2_000200
   tags:

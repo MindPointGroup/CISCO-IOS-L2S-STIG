@@ -250,6 +250,14 @@ iosstig_udld_global: "enable"
 # GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13  <--- Ports 8-10 and 13
 iosstig_udld_interface: "none"
 
+# CISC-L2-000200
+# iosstig_trunklink_interfaces is the variable that you will set to use in
+# the following STIG to make sure the switch configuration is set to verify 
+# that trunk links will not form a trunk via negotiation.
+# GigabitEthernet 1/0/8 <--- Port 8
+# GigabitEthernet 1/0/8-10 <--- Ports 8-10
+# GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13  <--- Ports 8-10 and 13
+iosstig_trunklink_interfaces: "GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/11"
 
 
 
