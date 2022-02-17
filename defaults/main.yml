@@ -42,10 +42,10 @@ cisc_l2_000150: false
 cisc_l2_000180: false
 cisc_l2_000190: false
 cisc_l2_000200: false
-cisc_l2_000210: true
+cisc_l2_000210: false
 cisc_l2_000220: false
 cisc_l2_000230: false
-cisc_l2_000240: false
+cisc_l2_000240: true
 cisc_l2_000250: false
 cisc_l2_000260: false
 
@@ -275,6 +275,34 @@ iosstig_blackhole_vlan_name: "BLACKHOLE"
 # GigabitEthernet 1/0/8-10 <--- Ports 8-10
 # GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13  <--- Ports 8-10 and 13 
 iosstig_blackhole_interfaces: "GigabitEthernet 1/0/18-20,GigabitEthernet 1/0/22"
+
+
+# CISC-L2-000220
+
+ 
+
+
+# CISC-L2-000230
+
+
+
+# CISC-L2-000240
+iosstig_mgmt_vlan: "22"
+iosstig_mgmt_vlan_name: "Management VLAN"
+iosstig_mgmt_ipaddress: "192.168.68.175"
+iosstig_mgmt_ipaddress_subnet: "255.255.255.0"
+
+
+
+
+# CISC-L2-000260
+iosstig_native_vlan: "44"
+iosstig_native_vlan_name: "NATIVE"
+
+
+
+
+
 
 
 # CAT 3

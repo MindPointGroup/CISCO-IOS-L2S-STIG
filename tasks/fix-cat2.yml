@@ -354,8 +354,16 @@
       - V-220643
 
 - name: "MEDIUM | CISC-L2-000240 | PATCH | The Cisco switch must not use the default VLAN for management traffic."
-  ios_command:
-      commands: echo true
+  block:
+      - name: Set New Management VLAN
+        cisco.ios.ios_config:
+            lines: 
+              - interface vlan {{ iosstig_mgmt_vlan }}
+              - description {{ iosstig_mgmt_vlan_name }}
+              - ip address {{ iosstig_mgmt_ipaddress }} {{ iosstig_mgmt_ipaddress_subnet }}
+              - no shutdown
+
+
   when:
       - cisc_l2_000240
   tags:
@@ -380,8 +388,13 @@
       - V-220645
 
 - name: "MEDIUM | CISC-L2-000260 | PATCH | The Cisco switch must have the native VLAN assigned to an ID other than the default VLAN for all 802.1q trunk links."
-  ios_command:
-      commands: echo true
+  block:
+      - name: Set Native VLAN
+        cisco.ios.ios_config:
+            lines: 
+                - vlan {{ iosstig_native_vlan }}
+                - name {{ iosstig_native_vlan_name }}
+
   when:
       - cisc_l2_000260
   tags:
