@@ -45,7 +45,7 @@ cisc_l2_000200: false
 cisc_l2_000210: false
 cisc_l2_000220: false
 cisc_l2_000230: false
-cisc_l2_000240: true
+cisc_l2_000240: false
 cisc_l2_000250: false
 cisc_l2_000260: false
 
@@ -287,10 +287,18 @@ iosstig_blackhole_interfaces: "GigabitEthernet 1/0/18-20,GigabitEthernet 1/0/22"
 
 
 # CISC-L2-000240
+# iosstig_mgmt_vlan is the new management vlan that replaces vlan1 as the main vlan that Cisco 
+# used for switch management.  
 iosstig_mgmt_vlan: "22"
+# iosstig_mgmt_vlan_name is the name that will be assigned to the new management vlan. 
 iosstig_mgmt_vlan_name: "Management VLAN"
+# iosstig_mgmt_ipaddress is the management ip address. 
 iosstig_mgmt_ipaddress: "192.168.68.175"
+# iosstig_mgmt_ipaddress_subnet is the subnet for management ip address. 
 iosstig_mgmt_ipaddress_subnet: "255.255.255.0"
+
+
+# CISC-L2-000250
 
 
 
