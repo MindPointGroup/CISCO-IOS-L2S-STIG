@@ -355,15 +355,13 @@
 
 - name: "MEDIUM | CISC-L2-000240 | PATCH | The Cisco switch must not use the default VLAN for management traffic."
   block:
-      - name: Set New Management VLAN
+      - name: "MEDIUM | CISC-L2-000240 | PATCH | The Cisco switch must not use the default VLAN for management traffic. | Set New Management VLAN."
         cisco.ios.ios_config:
             lines: 
               - interface vlan {{ iosstig_mgmt_vlan }}
               - description {{ iosstig_mgmt_vlan_name }}
               - ip address {{ iosstig_mgmt_ipaddress }} {{ iosstig_mgmt_ipaddress_subnet }}
               - no shutdown
-
-
   when:
       - cisc_l2_000240
   tags:

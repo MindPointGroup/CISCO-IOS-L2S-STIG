@@ -41,13 +41,13 @@ cisc_l2_000140: false
 cisc_l2_000150: false
 cisc_l2_000180: false
 cisc_l2_000190: false
-cisc_l2_000200: true
+cisc_l2_000200: false
 cisc_l2_000210: false
 cisc_l2_000220: false
 cisc_l2_000230: false
 cisc_l2_000240: false
 cisc_l2_000250: false
-cisc_l2_000260: true
+cisc_l2_000260: false
 
 # CAT 3 rules
 cisc_l2_000090: false
