@@ -375,8 +375,12 @@
       - V-220644
 
 - name: "MEDIUM | CISC-L2-000250 | PATCH | The Cisco switch must have all user-facing or untrusted ports configured as access switch ports."
-  ios_command:
-      commands: echo true
+  block:
+      - name: "MEDIUM | CISC-L2-000250 | PATCH | The Cisco switch must have all user-facing or untrusted ports configured as access switch ports. | Set Userfacing."
+        cisco.ios.ios_config:
+            lines:
+              - interface range {{ iosstig_setaccess_switchports }}
+              - switchport mode access
   when:
       - cisc_l2_000250
   tags:

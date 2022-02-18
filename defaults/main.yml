@@ -37,16 +37,16 @@ cisc_l2_000100: false
 cisc_l2_000110: false
 cisc_l2_000120: false
 cisc_l2_000130: false
-cisc_l2_000140: false
+cisc_l2_000140: true
 cisc_l2_000150: false
 cisc_l2_000180: false
 cisc_l2_000190: false
-cisc_l2_000200: true
-cisc_l2_000210: true
+cisc_l2_000200: false
+cisc_l2_000210: false
 cisc_l2_000220: false
-cisc_l2_000230: true
+cisc_l2_000230: false
 cisc_l2_000240: false
-cisc_l2_000250: false
+cisc_l2_000250: true
 cisc_l2_000260: false
 
 # CAT 3 rules
@@ -63,7 +63,7 @@ cisc_l2_000270: false
 # iosstig_trunk_ports
 # iosstig_access_ports
 # iosstig_blackhole_ports
-# iosstig_
+
 
 
  
@@ -191,17 +191,17 @@ iosstig_uufb_access_ports: "GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13"
 # you want first then put the assigned variable in iosstig_sourceguard_option. 
 #### NOTE ONLY TWO OPTIONS BELOW ####
 # iosstig_sourceguard_userfacing_ports OR iosstig_sourceguard_untrusted_ports
-iosstig_sourceguard_option: "{{ iosstig_sourceguard_untrusted_ports }}"
+iosstig_sourceguard_option: "{{ iosstig_sourceguard_userfacing_ports }}"
 # Here are some examples of the values excpeted in the port ranges.
 # GigabitEthernet 1/0/8 <--- Port 8
 # GigabitEthernet 1/0/8-10 <--- Ports 8-10
 # GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13  <--- Ports 8-10 and 13
-iosstig_sourceguard_userfacing_ports: "GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13"
+iosstig_sourceguard_userfacing_ports: "GigabitEthernet 1/0/2-4,GigabitEthernet 1/0/6"
 # Here are some examples of the values excpeted in the port ranges. 
 # GigabitEthernet 1/0/8 <--- Port 8
 # GigabitEthernet 1/0/8-10 <--- Ports 8-10
 # GigabitEthernet 1/0/13,GigabitEthernet 1/0/8-10  <--- Ports 8-10 and 13
-iosstig_sourceguard_untrusted_ports: "GigabitEthernet 1/0/13"
+iosstig_sourceguard_untrusted_ports: "GigabitEthernet 1/0/7"
 
 
 
@@ -284,10 +284,10 @@ iosstig_blackhole_interfaces: "GigabitEthernet 1/0/18-20,GigabitEthernet 1/0/22"
 
 # CISC-L2-000220
 
- 
-
-
-# CISC-L2-000230
+# CISC-L2-000250
+# iosstig_setaccess_switchports sets mode access to either iosstig_sourceguard_userfacing_ports 
+# or iosstig_sourceguard_untrusted_ports.  The STIG calls for one or the other to be set.  
+iosstig_setaccess_switchports: {{ iosstig_sourceguard_userfacing_ports }}
 
 
 
@@ -320,9 +320,6 @@ iosstig_native_vlan: "44"
 iosstig_native_vlan_name: "NATIVE"
 # iosstig_trunklink_interfaces_native is the trunk interfces set in CISC-L2-000200
 iosstig_trunklink_interfaces_native: "{{ iosstig_trunklink_interfaces }}"
-
-
-
 
 
 
