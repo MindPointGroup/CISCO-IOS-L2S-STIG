@@ -41,13 +41,13 @@ cisc_l2_000140: false
 cisc_l2_000150: false
 cisc_l2_000180: false
 cisc_l2_000190: false
-cisc_l2_000200: false
+cisc_l2_000200: true
 cisc_l2_000210: false
 cisc_l2_000220: false
 cisc_l2_000230: false
 cisc_l2_000240: false
 cisc_l2_000250: false
-cisc_l2_000260: false
+cisc_l2_000260: true
 
 # CAT 3 rules
 cisc_l2_000090: false
@@ -304,9 +304,17 @@ iosstig_mgmt_ipaddress_subnet: "255.255.255.0"
 
 
 # CISC-L2-000260
+# iosstig_native_vlan is the new native vlan for trunk links that you set in 
+# CISC-L2-000200.  The STIG states the Cisco switch must have the native VLAN 
+# assigned to an ID other than the default VLAN for all 802.1q trunk links.  
+# iosstig_native_vlan_name is the description of your native vlan for trunk links
+# for documentation purposes. 
+# NOTE: The native VLAN ID must be the same on both ends of the trunk link; otherwise, 
+# traffic could accidentally leak between broadcast domains.
 iosstig_native_vlan: "44"
 iosstig_native_vlan_name: "NATIVE"
-
+# iosstig_trunklink_interfaces_native is the trunk interfces set in CISC-L2-000200
+iosstig_trunklink_interfaces_native: "{{ iosstig_trunklink_interfaces }}"
 
 
 
