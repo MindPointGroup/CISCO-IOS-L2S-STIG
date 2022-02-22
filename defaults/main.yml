@@ -160,6 +160,31 @@ iosstig_remoteview_session_source:
 iosstig_remoteview_session_destination:
     - "none"
 
+
+
+# CISC-L2-000080
+# Settings below set the RADIUS indivigual names, ip, and key. 
+iosstig_radius_server_one_name: "RADIUS_1"
+iosstig_radius_server_one_ip: "192.168.68.250"
+iosstig_radius_server_one_key: "key_here"
+iosstig_radius_server_two_name: "RADIUS_2"
+iosstig_radius_server_two_ip: "192.168.68.251"
+iosstig_radius_server_two_key: "key_here"
+#iosstig_radius_group_name is the group name for the Radius servers.
+iosstig_radius_group_name: "RADIUS_SERVERS"
+# iosstig_auth_hostmode is the setting for the host facing interfaces.
+# Note: Single-host is the default. Host-mode multi-domain (for VoIP phone plus PC) or 
+# multi-auth (multiple PCs connected to a hub) can be configured as alternatives.
+# Below Are All Valid Options
+#  multi-auth    Multiple Authentication Mode
+#  multi-domain  Multiple Domain Mode
+#  multi-host    Multiple Host Mode
+#  single-host   SINGLE HOST Mode
+iosstig_auth_hostmode: "single-host"
+
+
+
+
 # CISC-L2-000100
 # iosstig_bpdu_guard_global allows you set BPDU Guard globally on a layer 2 switch.
 # none <--- This bypasses control. 
@@ -301,10 +326,6 @@ iosstig_mgmt_vlan_name: "Management VLAN"
 iosstig_mgmt_ipaddress: "192.168.68.175"
 # iosstig_mgmt_ipaddress_subnet is the subnet for management ip address. 
 iosstig_mgmt_ipaddress_subnet: "255.255.255.0"
-
-
-# CISC-L2-000250
-
 
 
 

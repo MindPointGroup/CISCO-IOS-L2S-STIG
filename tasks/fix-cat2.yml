@@ -115,8 +115,35 @@
       - V-220627
 
 - name: "MEDIUM | CISC-L2-000080 | PATCH | The Cisco switch must authenticate all endpoint devices before establishing any connection."
-  ios_command:
-      commands: echo true
+  block:
+      - name: "MEDIUM | CISC-L2-000080 | PATCH | The Cisco switch must authenticate all endpoint devices before establishing any connection. | Step 1 Config RADIUS SERVERS."
+        cisco.ios.ios_config:
+            lines:
+              - radius server {{ iosstig_radius_server_one_name }}
+              - address ipv4 {{ iosstig_radius_server_one_ip }}
+              - key {{ iosstig_radius_server_one_key }}
+              - radius server {{ iosstig_radius_server_two_name }}
+              - address ipv4 {{ iosstig_radius_server_two_ip }}
+              - key {{ iosstig_radius_server_two_key }}
+
+      - name: "MEDIUM | CISC-L2-000080 | PATCH | The Cisco switch must authenticate all endpoint devices before establishing any connection. | Step 2 Enable 802.1x Authentication On The Switch."
+        cisco.ios.ios_config:
+            lines: 
+              - aaa new-model
+              - aaa group server radius {{ iosstig_radius_group_name }}
+              - server name {{ iosstig_radius_server_one_name }}
+              - server name {{ iosstig_radius_server_two_name }}
+              - aaa authentication dot1x default group {{ iosstig_radius_group_name }}
+              - dot1x system-auth-control
+
+      - name: "MEDIUM | CISC-L2-000080 | PATCH | The Cisco switch must authenticate all endpoint devices before establishing any connection. | Step 3 Configure 802.1x on Hostfacing Interfaces."
+        cisco.ios.ios_config:
+            lines: 
+              - interface range {{ iosstig_sourceguard_userfacing_ports }}
+              - switchport mode access
+              - authentication host-mode {{ iosstig_auth_hostmode }}
+              - dot1x pae authenticator
+              - authentication port-control auto
   when:
       - cisc_l2_000080
   tags:
