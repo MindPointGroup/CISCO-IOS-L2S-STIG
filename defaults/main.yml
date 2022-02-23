@@ -1,7 +1,7 @@
 ---
 iosl2sstig_cat1_patch: false
 iosl2sstig_cat2_patch: true
-iosl2sstig_cat3_patch: true
+iosl2sstig_cat3_patch: false
 
 # We've defined complexity-high to mean that we cannot automatically remediate
 # the rule in question.  In the future this might mean that the remediation
@@ -57,31 +57,54 @@ cisc_l2_000270: false
 
 
 
-
-
-# Possible Global Variables
-
+# Global Variables
+# Here are some examples of the values expected in the range.
+# GigabitEthernet 1/0/8 <--- Port 8
+# GigabitEthernet 1/0/8-10 <--- Ports 8-10
+# GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13  <--- Ports 8-10 and 13
+# GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/25-28,GigabitEthernet 1/0/16-20 <--- Ports 8-10, 25-28, and 16-20
 
 # iosstig_trunk_ports
-
+iosstig_trunk_ports: "GigabitEthernet 1/0/1-2,GigabitEthernet 1/0/24"
 # iosstig_access_ports
-
-
+# These ports are used in control 90 to set Root Guard on all switch ports connecting to access layer switches.
+iosstig_rootguard_access_ports: "GigabitEthernet 1/0/3-7"
+# iosstig_userfacing_ports
+iosstig_userfacing_ports: "GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/12-15"
+# iosstig_untrusted_ports
+iosstig_untrusted_ports: "GigabitEthernet 1/0/16-19,GigabitEthernet 1/0/11"
 # iosstig_blackhole_ports
-
-
-# Cat 1 
- 
+iosstig_blackhole_ports: "GigabitEthernet 1/0/20-23,GigabitEthernet 1/0/25-28"
 
 
 
 
+# Cat 1
+# CISC-L2-000020
+# CISC-L2-000080
+# Settings below set the RADIUS SERVER indivigual names, ip, and key. 
+iosstig_radius_server_one_name: "RADIUS_1"
+iosstig_radius_server_one_ip: "192.168.68.250"
+iosstig_radius_server_one_key: "key_here"
+iosstig_radius_server_two_name: "RADIUS_2"
+iosstig_radius_server_two_ip: "192.168.68.251"
+iosstig_radius_server_two_key: "key_here"
+#iosstig_radius_group_name is the group name for the Radius servers.
+iosstig_radius_group_name: "RADIUS_SERVERS"
+# iosstig_auth_hostmode is the setting for the host facing interfaces.
+# Note: Single-host is the default. Host-mode multi-domain (for VoIP phone plus PC) or 
+# multi-auth (multiple PCs connected to a hub) can be configured as alternatives.
+# Below Are All Valid Options
+#  multi-auth    Multiple Authentication Mode
+#  multi-domain  Multiple Domain Mode
+#  multi-host    Multiple Host Mode
+#  single-host   SINGLE HOST Mode
+iosstig_auth_hostmode: "single-host"
 
 
 
 
-# Cat 2 
-
+# Cat 2
 # CISC-L2-000010
 # Not all Cisco switches support these features please make sure you add 
 # Review the switch configuration to verify that the switch does not have any unnecessary 
@@ -120,14 +143,12 @@ iosstig_non_essential_serv:
 # MAKE SURE TO VAULT PASSWORDS, PLAIN TEXT PASSWORDS ARE BAD.
 iosstig_vtp_user_password: changeme
 
-
-
 # CISC-L2-000060
 #####################################################################################
 #####################################################################################
 ###### BE AWARE CISC-L2-000070 HAS SIMILAR CONTROLS MAKE SURE SESSION NUMBER   ######
 ###### AND INTERFACES DO NOT OVERLAP ON THESE TWO CONTROLS. ONE CAN MONITOR    ######
-###### AND THE OTHER ALLOWS FOR REMOTEVIEW IN REAL TIME. BE AWARE CERTAIN      ######
+###### AND THE OTHER ALLOWS FOR REMOTE VIEW IN REAL TIME. BE AWARE CERTAIN     ######
 ###### SWITCHES HAVE A LIMITED NUMBER OF SOURCE SESSIONS.  TESTING WAS DONE ON ######
 ###### A SWITCH THAT ALLOWS FOR ONLY 2 SOURCE SESSIONS.                        ######
 #####################################################################################
@@ -139,15 +160,16 @@ iosstig_vtp_user_password: changeme
 # https://www.cisco.com/c/en/us/td/docs/routers/nfvis/switch_command/b-nfvis-switch-command-reference/monitor_commands.pdf
 # Below are examples of the configurations that can be applied.  
 # NOTE: RANGES ARE NOT VALID HERE
+
 # none <--- when placed in iosstig_capture_session_source & iosstig_capture_session_destination this bypasses the configuration of source and destination session monitoring.
 # 1 source interface GigabitEthernet 1/0/13  <--- 1 denotes the session number then source and destination direct flow, 
 # followed by the interfaces it will be sent or gathered from.  You may setup more then just 1 session in the configuration below.  
 iosstig_capture_session_source:
-    - "1 source interface GigabitEthernet 1/0/13"
-    - "2 source interface GigabitEthernet 1/0/14"
+    - "1 source interface GigabitEthernet 1/0/3"
+    - "2 source interface GigabitEthernet 1/0/4"
 iosstig_capture_session_destination:
-    - "1 destination interface GigabitEthernet 1/0/15"
-    - "2 destination interface GigabitEthernet 1/0/16"
+    - "1 destination interface GigabitEthernet 1/0/5"
+    - "2 destination interface GigabitEthernet 1/0/5"
 
 # CISC-L2-000070
 # iosstig_remoteview_session_source & iosstig_remoteview_session_destination allow authorized 
@@ -165,31 +187,6 @@ iosstig_remoteview_session_source:
 iosstig_remoteview_session_destination:
     - "none"
 
-
-
-# CISC-L2-000080
-# Settings below set the RADIUS indivigual names, ip, and key. 
-iosstig_radius_server_one_name: "RADIUS_1"
-iosstig_radius_server_one_ip: "192.168.68.250"
-iosstig_radius_server_one_key: "key_here"
-iosstig_radius_server_two_name: "RADIUS_2"
-iosstig_radius_server_two_ip: "192.168.68.251"
-iosstig_radius_server_two_key: "key_here"
-#iosstig_radius_group_name is the group name for the Radius servers.
-iosstig_radius_group_name: "RADIUS_SERVERS"
-# iosstig_auth_hostmode is the setting for the host facing interfaces.
-# Note: Single-host is the default. Host-mode multi-domain (for VoIP phone plus PC) or 
-# multi-auth (multiple PCs connected to a hub) can be configured as alternatives.
-# Below Are All Valid Options
-#  multi-auth    Multiple Authentication Mode
-#  multi-domain  Multiple Domain Mode
-#  multi-host    Multiple Host Mode
-#  single-host   SINGLE HOST Mode
-iosstig_auth_hostmode: "single-host"
-
-
-
-
 # CISC-L2-000100
 # iosstig_bpdu_guard_global allows you set BPDU Guard globally on a layer 2 switch.
 # none <--- This bypasses control. 
@@ -197,45 +194,20 @@ iosstig_auth_hostmode: "single-host"
 iosstig_bpdu_guard_global: "enable"
 # iosstig_bpdu_guard_interface allows the user to set BPDU Guard on specific ports on the switch
 # NOTE: Enable BPDU Guard on all user-facing or untrusted access switch ports as shown in the 
-# configuration example below:
-# none <--- This bypasses control. 
-# Here are some examples of the values expectted in the range.
-# GigabitEthernet 1/0/8 <--- Port 8
-# GigabitEthernet 1/0/8-10 <--- Ports 8-10
-# GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13  <--- Ports 8-10 and 13
-iosstig_bpdu_guard_interface: "none"
-
-# CISC-L2-000120
-# iosstig_uufb_access_ports allows you to set UUFB which will block unknown unicast traffic 
-# flooding and only permit egress traffic with MAC addresses that are known to exit on the port.
-# Here are some examples of the values excpeted in the port ranges.
-# GigabitEthernet 1/0/8 <--- Port 8
-# GigabitEthernet 1/0/8-10 <--- Ports 8-10
-# GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13  <--- Ports 8-10 and 13
-iosstig_uufb_access_ports: "GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13"
-
+# Configuration example below:
+# none <--- This bypasses control allowing you to set the global. 
+# iosstig_userfacing_ports <--- Sets it on userfacing ports defined in global variables at top.
+# iosstig_untrusted_ports <--- Sets it on untrusted ports defined in global variables at top.
+iosstig_bpdu_guard_interfaces: "none"
 
 # CISC-L2-000140
 # This will set the STIG to Configure the switch to have IP Source Guard enabled on 
 # all user-facing or untrusted access switch ports.  You will choose what configuration 
 # you want first then put the assigned variable in iosstig_sourceguard_option. 
 #### NOTE ONLY TWO OPTIONS BELOW ####
-# iosstig_sourceguard_userfacing_ports OR iosstig_sourceguard_untrusted_ports
-iosstig_sourceguard_option: "{{ iosstig_sourceguard_userfacing_ports }}"
-# Here are some examples of the values excpeted in the port ranges.
-# GigabitEthernet 1/0/8 <--- Port 8
-# GigabitEthernet 1/0/8-10 <--- Ports 8-10
-# GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13  <--- Ports 8-10 and 13
-iosstig_sourceguard_userfacing_ports: "GigabitEthernet 1/0/2-4,GigabitEthernet 1/0/6"
-# Here are some examples of the values excpeted in the port ranges. 
-# GigabitEthernet 1/0/8 <--- Port 8
-# GigabitEthernet 1/0/8-10 <--- Ports 8-10
-# GigabitEthernet 1/0/13,GigabitEthernet 1/0/8-10  <--- Ports 8-10 and 13
-iosstig_sourceguard_untrusted_ports: "GigabitEthernet 1/0/7"
-
-
-
-
+# iosstig_userfacing_ports <--- Sets it on userfacing ports defined in global variables at top.
+# iosstig_untrusted_ports <--- Sets it on untrusted ports defined in global variables at top.
+iosstig_sourceguard_option: "{{ iosstig_userfacing_ports }}"
 
 # CISC-L2-000130
 # CISC-L2-000150
@@ -271,9 +243,10 @@ iosstig_spanningtree_mode: "rapid-pvst"
 iosstig_spanningtree_remove_vlans: "none"
 iosstig_spanningtree_add_vlans: "none"
 
-
 # CISC-L2-000190
 # iosstig_udld_global allows you set UDLD globally on a layer 2 switch.
+# Note: An alternative implementation when UDLD is not supported by connected device is to deploy a 
+# single member Link Aggregation Group (LAG) via IEEE 802.3ad Link Aggregation Control Protocol (LACP).
 # none <--- This bypasses control. 
 # enable <--- This will set global UDLD
 iosstig_udld_global: "enable"
@@ -285,41 +258,17 @@ iosstig_udld_global: "enable"
 # GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13  <--- Ports 8-10 and 13
 iosstig_udld_interface: "none"
 
-# CISC-L2-000200
-# iosstig_trunklink_interfaces is the variable that you will set to use in
-# the following STIG to make sure the switch configuration is set to verify 
-# that trunk links will not form a trunk via negotiation.
-# Here are some examples of the values excpeted in the range.
-# GigabitEthernet 1/0/8 <--- Port 8
-# GigabitEthernet 1/0/8-10 <--- Ports 8-10
-# GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13  <--- Ports 8-10 and 13
-iosstig_trunklink_interfaces: "GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/11"
-
 # CISC-L2-000210
 # iosstig_blackhole_vlan is a vlan that directs inactive ports to a vlan that is inactive.
 # A disabled port that is assigned to a user or management VLAN may become enabled by 
 # accident or by an attacker and as a result may gain access to that VLAN as a member.
 # iosstig_blackhole_vlan_name is the name assigned to the VLAN where you will be directing
-# inactive ports too.  
+# inactive ports too.  The Blackhole interface ports are defined at top in global variables.
 iosstig_blackhole_vlan: "999"
 iosstig_blackhole_vlan_name: "BLACKHOLE"
-# iosstig_blackhole_interfaces is a list of all interfaces that will not be used and need to 
-# be assigned to the iosstig_blackhole_vlan. 
-# Here are some examples of the values excpeted in the range.
-# GigabitEthernet 1/0/8 <--- Port 8
-# GigabitEthernet 1/0/8-10 <--- Ports 8-10
-# GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13  <--- Ports 8-10 and 13 
-iosstig_blackhole_interfaces: "GigabitEthernet 1/0/18-20,GigabitEthernet 1/0/22"
-
 
 # CISC-L2-000220
-
-# CISC-L2-000250
-# iosstig_setaccess_switchports sets mode access to either iosstig_sourceguard_userfacing_ports 
-# or iosstig_sourceguard_untrusted_ports.  The STIG calls for one or the other to be set.  
-iosstig_setaccess_switchports: {{ iosstig_sourceguard_userfacing_ports }}
-
-
+########## NEED TO DO ###########
 
 # CISC-L2-000240
 # iosstig_mgmt_vlan is the new management vlan that replaces vlan1 as the main vlan that Cisco 
@@ -328,15 +277,22 @@ iosstig_mgmt_vlan: "22"
 # iosstig_mgmt_vlan_name is the name that will be assigned to the new management vlan. 
 iosstig_mgmt_vlan_name: "Management VLAN"
 # iosstig_mgmt_ipaddress is the management ip address. 
-iosstig_mgmt_ipaddress: "192.168.68.175"
+iosstig_mgmt_ipaddress: "10.10.10.10"
 # iosstig_mgmt_ipaddress_subnet is the subnet for management ip address. 
 iosstig_mgmt_ipaddress_subnet: "255.255.255.0"
 
-
+# CISC-L2-000250
+# iosstig_setaccess_switchports sets mode access to either iosstig_userfacing_ports 
+# or iosstig_untrusted_ports. The Cisco switch must have all user-facing or untrusted
+# ports configured as access switch ports.
+#### NOTE ONLY TWO OPTIONS BELOW ####
+# iosstig_userfacing_ports <--- Sets it on userfacing ports defined in global variables at top.
+# iosstig_untrusted_ports <--- Sets it on untrusted ports defined in global variables at top.
+iosstig_setaccess_switchports: "{{ iosstig_userfacing_ports }}"
 
 # CISC-L2-000260
 # iosstig_native_vlan is the new native vlan for trunk links that you set in 
-# CISC-L2-000200.  The STIG states the Cisco switch must have the native VLAN 
+# the global variabel setting.  The STIG states the Cisco switch must have the native VLAN 
 # assigned to an ID other than the default VLAN for all 802.1q trunk links.  
 # iosstig_native_vlan_name is the description of your native vlan for trunk links
 # for documentation purposes. 
@@ -344,28 +300,11 @@ iosstig_mgmt_ipaddress_subnet: "255.255.255.0"
 # traffic could accidentally leak between broadcast domains.
 iosstig_native_vlan: "44"
 iosstig_native_vlan_name: "NATIVE"
-# iosstig_trunklink_interfaces_native is the trunk interfces set in CISC-L2-000200
-iosstig_trunklink_interfaces_native: "{{ iosstig_trunklink_interfaces }}"
-
-
-
-
-
 
 
 
 
 # CAT 3
-# CISC-L2-000090
-# iosstig_rootguard_range is the port range for access layer switches.
-# Here are some examples of the values excpeted in the range.
-# GigabitEthernet 1/0/8 <--- Port 8
-# GigabitEthernet 1/0/8-10 <--- Ports 8-10
-# GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13  <--- Ports 8-10 and 13
-iosstig_rootguard_range: "GigabitEthernet 1/0/8-10"
-
-
-
 # CISC-L2-000160
 # iosstig_storm_control_range is the port range for setting storm control on all host facing switchports. 
 # Here are some examples of the values excpeted in the range.

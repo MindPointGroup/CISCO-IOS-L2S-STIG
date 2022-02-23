@@ -9,31 +9,4 @@
   - role: "{{ playbook_dir }}"
 
 
-# - name: Adding The Cisco Logins For Device To Configure
-#   hosts: localhost
-#   vars_prompt:
-#   - name: "target_host"
-#     prompt: "Please Enter The Target Machine IP Addresses"
-#     private: no
-#   - name: "ssh_username"
-#     prompt: "Enter SSH Username"
-#     private: no 
-#   - name: "ssh_password"
-#     prompt: "Enter Cisco Password"
-#     private: yes
-#     encrypt: "sha512_crypt"
-#   tasks:
-#     - name: Add Cisco Device
-#       add_host:
-#         name: "{{ target_host }}"
-#         group: added_hosts
-#     - set_fact:
-#         ios_user: "{{ ssh_username }}"
-#         ios_password: "{{ ssh_password }}"
-#       run_once: true
-#       delegate_to: localhost
-#       no_log: false
-
-
-
 

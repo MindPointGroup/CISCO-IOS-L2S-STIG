@@ -129,7 +129,7 @@
         - server name {{ iosstig_radius_server_two_name }}
         - aaa authentication dot1x default group {{ iosstig_radius_group_name }}
         - dot1x system-auth-control
-        - interface range {{ iosstig_sourceguard_userfacing_ports }}
+        - interface range {{ iosstig_userfacing_ports }}
         - switchport mode access
         - authentication host-mode {{ iosstig_auth_hostmode }}
         - dot1x pae authenticator
@@ -155,9 +155,9 @@
       - name: "MEDIUM | CISC-L2-000100 | PATCH |  The Cisco switch must have Bridge Protocol Data Unit (BPDU) Guard enabled on all user-facing or untrusted access switch ports. | Per Interface BPDU Guard."
         cisco.ios.ios_config:
             lines:
-              - interface range {{ iosstig_bpdu_guard_interface }} 
+              - interface range {{ iosstig_bpdu_guard_interfaces }} 
               - spanning-tree bpduguard enable
-        when: "'none' not in iosstig_bpdu_guard_interface"
+        when: "'none' not in iosstig_bpdu_guard_interfaces"
   when:
       - cisc_l2_000100
   tags:
@@ -185,8 +185,12 @@
 - name: "MEDIUM | CISC-L2-000120 | PATCH | The Cisco switch must have Unknown Unicast Flood Blocking (UUFB) enabled."
   cisco.ios.ios_config:
       lines:
-        - interface range {{ iosstig_uufb_access_ports }} 
+        - interface range {{ item }} 
         - switchport block unicast
+  loop:
+        - "{{ iosstig_userfacing_ports }}"
+        - "{{ iosstig_untrusted_ports }}"
+        - "{{ iosstig_blackhole_ports }}"
   when:
       - cisc_l2_000120
   tags:
@@ -300,7 +304,7 @@
 - name: "MEDIUM | CISC-L2-000200 | PATCH | The Cisco switch must have all trunk links enabled statically."
   cisco.ios.ios_config:
       lines:
-        - interface range {{ iosstig_trunklink_interfaces }}
+        - interface range {{ iosstig_trunk_ports }}
         - switchport trunk encapsulation dot1q
         - switchport mode trunk
         - switchport nonegotiate  
@@ -325,14 +329,14 @@
       - name: "MEDIUM | CISC-L2-000210 | PATCH | The Cisco switch must have all disabled switch ports assigned to an unused VLAN. | Assign Inactive Ports To VLAN and Shutdown."
         cisco.ios.ios_config:
             lines: 
-                - interface range {{ iosstig_blackhole_interfaces }}
+                - interface range {{ iosstig_blackhole_ports }}
                 - switchport access vlan {{ iosstig_blackhole_vlan }}
                 - shutdown
 
       - name: "MEDIUM | CISC-L2-000210 | PATCH | The Cisco switch must have all disabled switch ports assigned to an unused VLAN. | Remove Blackhole VLAN From Trunk Ports."
         cisco.ios.ios_config:
             lines: 
-              - interface range {{ iosstig_trunklink_interfaces }}
+              - interface range {{ iosstig_trunk_ports }}
               - switchport trunk allowed vlan except {{ iosstig_blackhole_vlan }} 
   when:
       - cisc_l2_000210
@@ -360,7 +364,7 @@
 - name: "MEDIUM | CISC-L2-000230 | PATCH | The Cisco switch must have the default VLAN pruned from all trunk ports that do not require it."
   cisco.ios.ios_config:
             lines:
-              - interface range {{ iosstig_trunklink_interfaces }}
+              - interface range {{ iosstig_trunk_ports }}
               - switchport trunk allowed vlan except 1,{{ iosstig_blackhole_vlan }}
   when:
       - cisc_l2_000230
@@ -418,7 +422,7 @@
       - name: "MEDIUM | CISC-L2-000260 | PATCH | The Cisco switch must have the native VLAN assigned to an ID other than the default VLAN for all 802.1q trunk links. | Apply New Native VLAN To Trunk Ports."
         cisco.ios.ios_config:
             lines: 
-                - interface range {{ iosstig_trunklink_interfaces_native }}
+                - interface range {{ iosstig_trunk_ports }}
                 - switchport trunk native vlan {{ iosstig_native_vlan }}
   when:
       - cisc_l2_000260

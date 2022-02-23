@@ -2,7 +2,7 @@
 - name: "LOW | CISC-L2-000090 | PATCH | The Cisco switch must have Root Guard enabled on all switch ports connecting to access layer switches."
   cisco.ios.ios_config:  
       lines:
-          - interface range {{ iosstig_rootguard_range }}
+          - interface range {{ iosstig_rootguard_access_ports }}
           - spanning-tree guard root   
   when:
       - cisc_l2_000090

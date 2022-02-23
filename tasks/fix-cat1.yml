@@ -14,7 +14,7 @@
         - server name {{ iosstig_radius_server_two_name }}
         - aaa authentication dot1x default group {{ iosstig_radius_group_name }}
         - dot1x system-auth-control
-        - interface range {{ iosstig_sourceguard_userfacing_ports }}
+        - interface range {{ iosstig_userfacing_ports }}
         - switchport mode access
         - authentication host-mode {{ iosstig_auth_hostmode }}
         - dot1x pae authenticator
