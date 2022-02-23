@@ -17,10 +17,9 @@
 - name: "LOW | CISC-L2-000160 | PATCH | The Cisco switch must have Storm Control configured on all host-facing switchports."
   cisco.ios.ios_config:  
       lines:
-          - interface range {{ iosstig_storm_control_range }}
+          - interface range {{ iosstig_userfacing_port }}
           - storm-control unicast {{ iosstig_unicast_bps_value }}
           - storm-control broadcast {{ iosstig_broadcast_bps_value }}
-  # notify: copy config
   when:
       - cisc_l2_000160
   tags:

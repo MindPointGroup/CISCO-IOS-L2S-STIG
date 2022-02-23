@@ -306,12 +306,6 @@ iosstig_native_vlan_name: "NATIVE"
 
 # CAT 3
 # CISC-L2-000160
-# iosstig_storm_control_range is the port range for setting storm control on all host facing switchports. 
-# Here are some examples of the values excpeted in the range.
-# GigabitEthernet 1/0/8 <--- Port 8
-# GigabitEthernet 1/0/8-10 <--- Ports 8-10
-# GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13  <--- Ports 8-10 and 13
-iosstig_storm_control_range: "GigabitEthernet 1/0/8-10,GigabitEthernet 1/0/13"
 # iosstig_unicast_bps_value is the bps value
 # Older L2 switches require level as a step before setting bps. This var requires this level bps.
 # for example the value would be "level bps 62000000" for those older switches and
