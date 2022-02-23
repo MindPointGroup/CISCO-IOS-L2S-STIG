@@ -37,7 +37,7 @@ cisc_l2_000100: false
 cisc_l2_000110: false
 cisc_l2_000120: false
 cisc_l2_000130: false
-cisc_l2_000140: true
+cisc_l2_000140: false
 cisc_l2_000150: false
 cisc_l2_000180: false
 cisc_l2_000190: false
@@ -46,7 +46,7 @@ cisc_l2_000210: false
 cisc_l2_000220: false
 cisc_l2_000230: false
 cisc_l2_000240: false
-cisc_l2_000250: true
+cisc_l2_000250: false
 cisc_l2_000260: false
 
 # CAT 3 rules
@@ -59,13 +59,18 @@ cisc_l2_000270: false
 
 
 
-# Possible Global Variable
+# Possible Global Variables
+
+
 # iosstig_trunk_ports
+
 # iosstig_access_ports
+
+
 # iosstig_blackhole_ports
 
 
-
+# Cat 1 
  
 
 
@@ -341,6 +346,12 @@ iosstig_native_vlan: "44"
 iosstig_native_vlan_name: "NATIVE"
 # iosstig_trunklink_interfaces_native is the trunk interfces set in CISC-L2-000200
 iosstig_trunklink_interfaces_native: "{{ iosstig_trunklink_interfaces }}"
+
+
+
+
+
+
 
 
 
