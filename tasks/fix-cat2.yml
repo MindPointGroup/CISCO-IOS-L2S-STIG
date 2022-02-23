@@ -307,7 +307,7 @@
         - interface range {{ iosstig_trunk_ports }}
         - switchport trunk encapsulation dot1q
         - switchport mode trunk
-        - switchport nonegotiate  
+        - switchport nonegotiate 
   when:
       - cisc_l2_000200
   tags:
@@ -349,8 +349,19 @@
       - V-220641
 
 - name: "MEDIUM | CISC-L2-000220 | PATCH | The Cisco switch must not have the default VLAN assigned to any host-facing switch ports."
-  ios_command:
-      commands: echo true
+  block:
+      - name: "MEDIUM | CISC-L2-000220 | PATCH | The Cisco switch must not have the default VLAN assigned to any host-facing switch ports. | Get VLAN Status."
+        cisco.ios.ios_command:
+          commands:
+            - show vlan
+        register: cisc_l2_000270_vlaninfo
+        
+      - name: "MEDIUM | CISC-L2-000220 | PATCH | The Cisco switch must not have the default VLAN assigned to any host-facing switch ports. | Message Out"
+        debug:
+          msg:
+              - "Warning! Below are the ports that are on the default VLAN"
+              - "To conform to STIG standards make sure these access switch ports are assigned to the correct VLANS."
+              - "{{ cisc_l2_000270_vlaninfo.stdout_lines }}"
   when:
       - cisc_l2_000220
   tags:

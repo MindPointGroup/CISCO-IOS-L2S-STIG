@@ -18,7 +18,7 @@
 
 [cisco:vars] 
 ansible_network_os=cisco.ios.ios 
-ansible_ssh_user=mpg
+ansible_ssh_user=
 ansible_ssh_password=password
 ansible_port=22
 ansible_become=yes
