@@ -429,10 +429,12 @@
   block:
       - name: "MEDIUM | CISC-L2-000260 | PATCH | The Cisco switch must have the native VLAN assigned to an ID other than the default VLAN for all 802.1q trunk links. | Setup New Native Vlan & Name."
         cisco.ios.ios_vlans:
-            lines: 
+            config: 
                 - vlan_id: "{{ iosstig_native_vlan }}"
                   name: "{{ iosstig_native_vlan_name }}"
-                  
+                  shutdown: disabled
+            state: merged
+
       - name: "MEDIUM | CISC-L2-000260 | PATCH | The Cisco switch must have the native VLAN assigned to an ID other than the default VLAN for all 802.1q trunk links. | Apply New Native VLAN To Trunk Ports."
         cisco.ios.ios_config:
             lines: 

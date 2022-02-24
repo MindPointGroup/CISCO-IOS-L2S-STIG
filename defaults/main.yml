@@ -169,7 +169,6 @@ iosstig_capture_session_source:
     - "2 source interface GigabitEthernet 1/0/4"
 iosstig_capture_session_destination:
     - "1 destination interface GigabitEthernet 1/0/5"
-    - "2 destination interface GigabitEthernet 1/0/5"
 
 # CISC-L2-000070
 # iosstig_remoteview_session_source & iosstig_remoteview_session_destination allow authorized 
