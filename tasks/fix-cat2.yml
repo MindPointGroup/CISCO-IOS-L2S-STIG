@@ -14,7 +14,6 @@
       - SV-220622r539671_rule
       - V-220622
       
-      
 - name: "MEDIUM | CISC-L2-000030 | PATCH | The Cisco switch must authenticate all VLAN Trunk Protocol (VTP) messages with a hash function using the most secured cryptographic algorithm available."
   block:
       - name: "MEDIUM | CISC-L2-000030 | PATCH | The Cisco switch must authenticate all VLAN Trunk Protocol (VTP) messages with a hash function using the most secured cryptographic algorithm available. | Get VTP Mode"

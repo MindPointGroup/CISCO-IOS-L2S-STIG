@@ -32,18 +32,25 @@
 
 - name: "LOW | CISC-L2-000170 | PATCH | The Cisco switch must have IGMP or MLD Snooping configured on all VLANs."
   block:
-      - name: "LOW | CISC-L2-000170 | PATCH | The Cisco switch must have IGMP or MLD Snooping configured on all VLANs. | Enable IGMP"
-        cisco.ios.ios_config:
-            commands: 
-                - ip igmp snooping 
-
-      - name: "LOW | CISC-L2-000170 | PATCH | The Cisco switch must have IGMP or MLD Snooping configured on all VLANs. | Get Snooping Status"
+      - name: "LOW | CISC-L2-000170 | PATCH | The Cisco switch must have IGMP or MLD Snooping configured on all VLANs. | Get Snooping Status Global"
         cisco.ios.ios_command:
           commands:
             - show run | include no ip igmp    
         register: cisc_l2_000170_igmp_status
-
+      
       - name: "LOW | CISC-L2-000170 | PATCH | The Cisco switch must have IGMP or MLD Snooping configured on all VLANs. | Enable IGMP"
+        cisco.ios.ios_config:
+            lines:
+                - ip igmp snooping
+        when: "'no ip igmp snooping' in cisc_l2_000170_igmp_status.stdout"
+
+      - name: "LOW | CISC-L2-000170 | PATCH | The Cisco switch must have IGMP or MLD Snooping configured on all VLANs. | Get Snooping Status VLAN"
+        cisco.ios.ios_command:
+          commands:
+            - show run | include no ip igmp    
+        register: cisc_l2_000170_igmp_status
+          
+      - name: "LOW | CISC-L2-000170 | PATCH | The Cisco switch must have IGMP or MLD Snooping configured on all VLANs. | Enable IGMP VLAN"
         cisco.ios.ios_config:
             commands: 
                 - ip igmp snooping vlan {{ item }}
