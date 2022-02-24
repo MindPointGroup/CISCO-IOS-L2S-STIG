@@ -27,32 +27,32 @@ change_requires_reboot: false
 cisc_l2_000020: false
 
 # CAT 2 rules
-cisc_l2_000010: false
-cisc_l2_000030: false
-cisc_l2_000040: false
-cisc_l2_000060: false
-cisc_l2_000070: false
+cisc_l2_000010: true
+cisc_l2_000030: true
+cisc_l2_000040: true
+cisc_l2_000060: true
+cisc_l2_000070: true
 cisc_l2_000080: false
-cisc_l2_000100: false
-cisc_l2_000110: false
-cisc_l2_000120: false
-cisc_l2_000130: false
-cisc_l2_000140: false
-cisc_l2_000150: false
-cisc_l2_000180: false
-cisc_l2_000190: false
+cisc_l2_000100: true
+cisc_l2_000110: true
+cisc_l2_000120: true
+cisc_l2_000130: true
+cisc_l2_000140: true
+cisc_l2_000150: true
+cisc_l2_000180: true
+cisc_l2_000190: true
 cisc_l2_000200: true
-cisc_l2_000210: false
-cisc_l2_000220: false
-cisc_l2_000230: false
-cisc_l2_000240: false
-cisc_l2_000250: false
+cisc_l2_000210: true
+cisc_l2_000220: true
+cisc_l2_000230: true
+cisc_l2_000240: true
+cisc_l2_000250: true
 cisc_l2_000260: true
 
 # CAT 3 rules
-cisc_l2_000090: false
-cisc_l2_000160: false
-cisc_l2_000170: false
+cisc_l2_000090: true
+cisc_l2_000160: true
+cisc_l2_000170: true
 cisc_l2_000270: true
 
 

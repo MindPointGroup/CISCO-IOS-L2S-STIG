@@ -28,14 +28,14 @@
             commands: 
                 - show vtp password
         register: cisc_l2_000030_vtppassword
-        when: '"VTP Operating Mode                : Off" not in vtp_mode.stdout'
+        when: '"VTP Operating Mode                : Off" not in cisc_l2_000030_vtp_mode.stdout'
 
       - name: MEDIUM | CISC-L2-000030 | PATCH | The Cisco switch must authenticate all VLAN Trunk Protocol (VTP) messages with a hash function using the most secured cryptographic algorithm available. | Set password"
         cisco.ios.ios_command:  
             commands:
                 - vtp password {{ iosstig_vtp_user_password }} 
         changed_when: true
-        when: "'The VTP password is not configured.' in vtppassword.stdout"
+        when: "'The VTP password is not configured.' in cisc_l2_000030_vtppassword.stdout"
   when:
       - cisc_l2_000030
   tags:
@@ -321,10 +321,12 @@
 - name: "MEDIUM | CISC-L2-000210 | PATCH | The Cisco switch must have all disabled switch ports assigned to an unused VLAN."
   block:
       - name: "MEDIUM | CISC-L2-000210 | PATCH | The Cisco switch must have all disabled switch ports assigned to an unused VLAN. | Create Blackhole VLAN And Name It."
-        cisco.ios.ios_config:
-            lines: 
-                - vlan {{ iosstig_blackhole_vlan }}
-                - name {{ iosstig_blackhole_vlan_name }}
+        cisco.ios.ios_vlans:
+            config: 
+                - vlan_id: "{{ iosstig_blackhole_vlan }}"
+                  name: "{{ iosstig_blackhole_vlan_name }}"
+                  shutdown: disabled
+            state: merged  
 
       - name: "MEDIUM | CISC-L2-000210 | PATCH | The Cisco switch must have all disabled switch ports assigned to an unused VLAN. | Assign Inactive Ports To VLAN and Shutdown."
         cisco.ios.ios_config:
@@ -426,10 +428,11 @@
 - name: "MEDIUM | CISC-L2-000260 | PATCH | The Cisco switch must have the native VLAN assigned to an ID other than the default VLAN for all 802.1q trunk links."
   block:
       - name: "MEDIUM | CISC-L2-000260 | PATCH | The Cisco switch must have the native VLAN assigned to an ID other than the default VLAN for all 802.1q trunk links. | Setup New Native Vlan & Name."
-        cisco.ios.ios_config:
+        cisco.ios.ios_vlans:
             lines: 
-                - vlan {{ iosstig_native_vlan }}
-                - name {{ iosstig_native_vlan_name }}
+                - vlan_id: "{{ iosstig_native_vlan }}"
+                  name: "{{ iosstig_native_vlan_name }}"
+                  
       - name: "MEDIUM | CISC-L2-000260 | PATCH | The Cisco switch must have the native VLAN assigned to an ID other than the default VLAN for all 802.1q trunk links. | Apply New Native VLAN To Trunk Ports."
         cisco.ios.ios_config:
             lines: 
@@ -444,8 +447,3 @@
       - SRG-NET-000512-L2S-000012
       - SV-220646r539671_rule
       - V-220646
-
-
-
-
-
